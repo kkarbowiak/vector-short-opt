@@ -37,9 +37,10 @@ TEST_CASE("Default ctor", "[opt][ctor][default]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Fill ctor", "[opt][ctor][fill]")
 {
+    int const v = 7;
+
     SECTION("Zero-size")
     {
-        int const v = 7;
         vec4<int>::type::size_type const s = 0;
         vec4<int>::type const v4(s, v);
 
@@ -54,7 +55,6 @@ TEST_CASE("Fill ctor", "[opt][ctor][fill]")
 
     SECTION("One-size")
     {
-        int const v = 7;
         vec4<int>::type::size_type const s = 1;
         vec4<int>::type const v4(s, v);
 
@@ -69,7 +69,6 @@ TEST_CASE("Fill ctor", "[opt][ctor][fill]")
 
     SECTION("Sixteen-size")
     {
-        int const v = 7;
         vec4<int>::type::size_type const s = 16;
         vec4<int>::type const v4(s, v);
 
