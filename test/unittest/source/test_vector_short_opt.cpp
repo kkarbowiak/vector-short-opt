@@ -476,9 +476,10 @@ TEST_CASE("Reserve", "[opt][reserve]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Subscript operator", "[opt][operator][subscript]")
 {
+    int const arr[3] = {0, 1, 2};
+
     SECTION("Const")
     {
-        int const arr[3] = {0, 1, 2};
         vec4<int>::type const v4(arr, arr + 3);
 
         for (vec4<int>::type::size_type i = 0; i < 3; ++i)
@@ -489,7 +490,6 @@ TEST_CASE("Subscript operator", "[opt][operator][subscript]")
 
     SECTION("Non-const")
     {
-        int const arr[3] = {0, 1, 2};
         vec4<int>::type v4(arr, arr + 3);
 
         for (vec4<int>::type::size_type i = 0; i < 3; ++i)
