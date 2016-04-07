@@ -575,11 +575,12 @@ TEST_CASE("Front", "[opt][front]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Back", "[opt][back]")
 {
+    int const f = 7;
+    int const b = 11;
+    int const arr[2] = {f, b};
+
     SECTION("Const")
     {
-        int const f = 7;
-        int const b = 11;
-        int const arr[2] = {f, b};
         vec4<int>::type const v4(arr, arr + 2);
 
         REQUIRE(v4.back() == b);
@@ -587,9 +588,6 @@ TEST_CASE("Back", "[opt][back]")
 
     SECTION("Non-const")
     {
-        int const f = 7;
-        int const b = 11;
-        int const arr[2] = {f, b};
         vec4<int>::type v4(arr, arr + 2);
 
         REQUIRE(v4.back() == b);
