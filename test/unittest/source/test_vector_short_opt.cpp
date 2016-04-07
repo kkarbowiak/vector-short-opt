@@ -598,11 +598,12 @@ TEST_CASE("Range assign", "[opt][assign][range]")
 {
     SECTION("Empty")
     {
+        vec4<int>::type v4;
+
+        int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14, 15};
+
         SECTION("Zero-range")
         {
-            vec4<int>::type v4;
-
-            int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14, 15};
             vec4<int>::type::size_type const s = 0;
 
             v4.assign(arr, arr + s);
@@ -618,9 +619,6 @@ TEST_CASE("Range assign", "[opt][assign][range]")
 
         SECTION("One-range")
         {
-            vec4<int>::type v4;
-
-            int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14, 15};
             vec4<int>::type::size_type const s = 1;
 
             v4.assign(arr, arr + s);
@@ -636,9 +634,6 @@ TEST_CASE("Range assign", "[opt][assign][range]")
 
         SECTION("Sixteen-range")
         {
-            vec4<int>::type v4;
-
-            int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14, 15};
             vec4<int>::type::size_type const s = 16;
 
             v4.assign(arr, arr + s);
