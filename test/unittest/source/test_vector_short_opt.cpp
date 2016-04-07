@@ -788,13 +788,15 @@ TEST_CASE("Insert fill", "[opt][insert][fill]")
 {
     SECTION("Empty")
     {
+        int const v1 = 7;
+        int const v2 = 17;
+
+        vec4<int>::type::size_type n = 3;
+
+        vec4<int>::type v4;
+
         SECTION("To begin")
         {
-            int const v1 = 7;
-            vec4<int>::type::size_type n = 3;
-
-            vec4<int>::type v4;
-
             v4.insert(v4.begin(), n, v1);
 
             REQUIRE(v4.capacity() >= v4.size());
@@ -802,8 +804,6 @@ TEST_CASE("Insert fill", "[opt][insert][fill]")
             REQUIRE(v4[0] == v1);
             REQUIRE(v4[1] == v1);
             REQUIRE(v4[2] == v1);
-
-            int const v2 = 17;
 
             v4.insert(v4.begin(), n, v2);
 
@@ -816,11 +816,6 @@ TEST_CASE("Insert fill", "[opt][insert][fill]")
 
         SECTION("To end")
         {
-            int const v1 = 7;
-            vec4<int>::type::size_type n = 3;
-
-            vec4<int>::type v4;
-
             v4.insert(v4.end(), n, v1);
 
             REQUIRE(v4.capacity() >= v4.size());
@@ -828,8 +823,6 @@ TEST_CASE("Insert fill", "[opt][insert][fill]")
             REQUIRE(v4[0] == v1);
             REQUIRE(v4[1] == v1);
             REQUIRE(v4[2] == v1);
-
-            int const v2 = 17;
 
             v4.insert(v4.end(), n, v2);
 
