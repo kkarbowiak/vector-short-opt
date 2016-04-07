@@ -747,19 +747,18 @@ TEST_CASE("Insert single", "[opt][insert][single]")
 {
     SECTION("Empty")
     {
+        int const v1 = 7;
+        int const v2 = 17;
+
+        vec4<int>::type v4;
+
         SECTION("To begin")
         {
-            int const v1 = 7;
-
-            vec4<int>::type v4;
-
             v4.insert(v4.begin(), v1);
 
             REQUIRE(v4.capacity() >= v4.size());
             REQUIRE(v4.size() == 1);
             REQUIRE(v4.front() == v1);
-
-            int const v2 = 17;
 
             v4.insert(v4.begin(), v2);
 
@@ -770,17 +769,11 @@ TEST_CASE("Insert single", "[opt][insert][single]")
 
         SECTION("To end")
         {
-            int const v1 = 7;
-
-            vec4<int>::type v4;
-
             v4.insert(v4.end(), v1);
 
             REQUIRE(v4.capacity() >= v4.size());
             REQUIRE(v4.size() == 1);
             REQUIRE(v4.back() == v1);
-
-            int const v2 = 17;
 
             v4.insert(v4.end(), v2);
 
