@@ -403,9 +403,10 @@ TEST_CASE("Reserve", "[opt][reserve]")
 {
     SECTION("Empty")
     {
+        vec4<int>::type v4;
+
         SECTION("To zero")
         {
-            vec4<int>::type v4;
             vec4<int>::type::size_type const r = 0;
 
             v4.reserve(r);
@@ -418,7 +419,6 @@ TEST_CASE("Reserve", "[opt][reserve]")
 
         SECTION("To non-zero")
         {
-            vec4<int>::type v4;
             vec4<int>::type::size_type const r = 7;
 
             v4.reserve(r);
@@ -432,11 +432,12 @@ TEST_CASE("Reserve", "[opt][reserve]")
 
     SECTION("Non-empty")
     {
+        int const v = 7;
+        vec4<int>::type::size_type const s = 4;
+        vec4<int>::type v4(s, v);
+
         SECTION("To zero")
         {
-            int const v = 7;
-            vec4<int>::type::size_type const s = 4;
-            vec4<int>::type v4(s, v);
             vec4<int>::type::size_type const r = 0;
 
             v4.reserve(r);
@@ -449,9 +450,6 @@ TEST_CASE("Reserve", "[opt][reserve]")
 
         SECTION("To same")
         {
-            int const v = 7;
-            vec4<int>::type::size_type const s = 4;
-            vec4<int>::type v4(s, v);
             vec4<int>::type::size_type const r = s;
 
             v4.reserve(r);
@@ -464,9 +462,6 @@ TEST_CASE("Reserve", "[opt][reserve]")
 
         SECTION("To more")
         {
-            int const v = 7;
-            vec4<int>::type::size_type const s = 4;
-            vec4<int>::type v4(s, v);
             vec4<int>::type::size_type const r = s + 3;
 
             v4.reserve(r);
