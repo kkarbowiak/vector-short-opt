@@ -84,9 +84,10 @@ TEST_CASE("Fill ctor", "[opt][ctor][fill]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Range ctor", "[opt][ctor][range]")
 {
+    int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14, 15};
+
     SECTION("Zero-range")
     {
-        int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14, 15};
         vec4<int>::type::size_type const s = 0;
         vec4<int>::type const v4(arr, arr + s);
 
@@ -101,7 +102,6 @@ TEST_CASE("Range ctor", "[opt][ctor][range]")
 
     SECTION("One-range")
     {
-        int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14, 15};
         vec4<int>::type::size_type const s = 1;
         vec4<int>::type const v4(arr, arr + s);
 
@@ -116,7 +116,6 @@ TEST_CASE("Range ctor", "[opt][ctor][range]")
 
     SECTION("Sixteen-range")
     {
-        int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14, 15};
         vec4<int>::type::size_type const s = 16;
         vec4<int>::type const v4(arr, arr + s);
 
