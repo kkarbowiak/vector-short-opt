@@ -269,10 +269,11 @@ TEST_CASE("Begin", "[opt][begin]")
 
     SECTION("Non-empty")
     {
+        int const v = 7;
+        vec4<int>::type::size_type const s = 1;
+
         SECTION("Const")
         {
-            int const v = 7;
-            vec4<int>::type::size_type const s = 1;
             vec4<int>::type const v4(s, v);
 
             REQUIRE(v4.capacity() >= v4.size());
@@ -283,8 +284,6 @@ TEST_CASE("Begin", "[opt][begin]")
 
         SECTION("Non-const")
         {
-            int const v = 7;
-            vec4<int>::type::size_type const s = 1;
             vec4<int>::type v4(s, v);
 
             REQUIRE(v4.capacity() >= v4.size());
