@@ -348,9 +348,10 @@ TEST_CASE("Resize", "[opt][resize]")
 {
     SECTION("Empty")
     {
+        vec4<int>::type v4;
+
         SECTION("To zero")
         {
-            vec4<int>::type v4;
             vec4<int>::type::size_type const r = 0;
 
             v4.resize(r);
@@ -361,7 +362,6 @@ TEST_CASE("Resize", "[opt][resize]")
 
         SECTION("To non-zero")
         {
-            vec4<int>::type v4;
             vec4<int>::type::size_type const r = 17;
 
             v4.resize(r);
@@ -373,11 +373,12 @@ TEST_CASE("Resize", "[opt][resize]")
 
     SECTION("Non-empty")
     {
+        int const v = 7;
+        vec4<int>::type::size_type const s = 3;
+        vec4<int>::type v4(s, v);
+
         SECTION("To zero")
         {
-            int const v = 7;
-            vec4<int>::type::size_type const s = 3;
-            vec4<int>::type v4(s, v);
             vec4<int>::type::size_type const r = 0;
 
             v4.resize(r);
@@ -388,9 +389,6 @@ TEST_CASE("Resize", "[opt][resize]")
 
         SECTION("To non-zero")
         {
-            int const v = 7;
-            vec4<int>::type::size_type const s = 3;
-            vec4<int>::type v4(s, v);
             vec4<int>::type::size_type const r = 17;
 
             v4.resize(r);
