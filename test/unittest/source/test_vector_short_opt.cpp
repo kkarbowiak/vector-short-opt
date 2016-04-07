@@ -1052,9 +1052,10 @@ TEST_CASE("Size", "[opt][size]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Capacity", "[opt][capacity]")
 {
+    vec4<int>::type v4;
+
     SECTION("Zero")
     {
-        vec4<int>::type v4;
         vec4<int>::type::size_type const c = 0;
 
         v4.reserve(c);
@@ -1064,7 +1065,6 @@ TEST_CASE("Capacity", "[opt][capacity]")
 
     SECTION("Non-zero")
     {
-        vec4<int>::type v4;
         vec4<int>::type::size_type const c = 7;
 
         v4.reserve(c);
