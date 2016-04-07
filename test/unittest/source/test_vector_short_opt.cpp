@@ -1023,9 +1023,10 @@ TEST_CASE("Empty", "[opt][empty]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Size", "[opt][size]")
 {
+    int const v = 7;
+
     SECTION("Zero-size")
     {
-        int const v = 7;
         vec4<int>::type::size_type const s = 0;
         vec4<int>::type v4(s, v);
 
@@ -1034,7 +1035,6 @@ TEST_CASE("Size", "[opt][size]")
 
     SECTION("One-size")
     {
-        int const v = 7;
         vec4<int>::type::size_type const s = 1;
         vec4<int>::type v4(s, v);
 
@@ -1043,7 +1043,6 @@ TEST_CASE("Size", "[opt][size]")
 
     SECTION("Sixteen-size")
     {
-        int const v = 7;
         vec4<int>::type::size_type const s = 16;
         vec4<int>::type v4(s, v);
 
