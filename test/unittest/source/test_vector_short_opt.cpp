@@ -888,12 +888,12 @@ TEST_CASE("Insert raange", "[opt][insert][range]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Erase single", "[opt][erase][single]")
 {
+    int const arr[5] = {0, 1, 2, 3, 4};
+    vec4<int>::type::size_type const s = 5;
+    vec4<int>::type v4(arr, arr + s);
+
     SECTION("Front")
     {
-        int const arr[5] = {0, 1, 2, 3, 4};
-        vec4<int>::type::size_type const s = 5;
-        vec4<int>::type v4(arr, arr + s);
-
         vec4<int>::type::iterator i = v4.erase(v4.begin());
 
         REQUIRE(v4.capacity() >= v4.size());
@@ -903,10 +903,6 @@ TEST_CASE("Erase single", "[opt][erase][single]")
 
     SECTION("Middle")
     {
-        int const arr[5] = {0, 1, 2, 3, 4};
-        vec4<int>::type::size_type const s = 5;
-        vec4<int>::type v4(arr, arr + s);
-
         vec4<int>::type::iterator i = v4.erase(v4.begin() + 2);
 
         REQUIRE(v4.capacity() >= v4.size());
@@ -916,10 +912,6 @@ TEST_CASE("Erase single", "[opt][erase][single]")
 
     SECTION("Back")
     {
-        int const arr[5] = {0, 1, 2, 3, 4};
-        vec4<int>::type::size_type const s = 5;
-        vec4<int>::type v4(arr, arr + s);
-
         vec4<int>::type::iterator i = v4.erase(v4.begin() + 4);
 
         REQUIRE(v4.capacity() >= v4.size());
