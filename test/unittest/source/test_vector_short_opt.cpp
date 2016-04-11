@@ -3,6 +3,7 @@
 #include "vector_short_opt.h"
 
 #include <stdexcept>
+#include <cstddef> // std::size_t
 
 
 template<typename T>
@@ -12,12 +13,17 @@ struct vec4
 };
 
 template<typename T>
-bool requireEqual(vec4<T> const v4, std::vector<T> const vr)
+struct vect
+{
+    typedef std::vector<T> type;
+};
+
+void requireEqual(vec4<int>::type const & v4, vect<int>::type const & vr)
 {
     REQUIRE(v4.size() == vr.size());
 
-    vec4<T>::size_type v4i = 0;
-    std::vector<T>::size_type vri = 0;
+    vec4<int>::type::size_type v4i = 0;
+    vect<int>::type::size_type vri = 0;
 
     for (; v4i != v4.size() && vri != vr.size(); ++v4i, ++vri)
     {
@@ -41,44 +47,38 @@ TEST_CASE("Fill ctor", "[opt][ctor][fill]")
 
     SECTION("Zero-size")
     {
-        vec4<int>::type::size_type const s = 0;
+        std::size_t const s = 0;
         vec4<int>::type const v4(s, v);
+        vect<int>::type const vr(s, v);
 
         REQUIRE(v4.capacity() >= v4.size());
-
         REQUIRE(v4.size() == s);
-        for (vec4<int>::type::size_type i = 0; i < v4.size(); ++i)
-        {
-            REQUIRE(v4[i] == v);
-        }
+
+        requireEqual(v4, vr);
     }
 
     SECTION("One-size")
     {
-        vec4<int>::type::size_type const s = 1;
+        std::size_t const s = 1;
         vec4<int>::type const v4(s, v);
+        vect<int>::type const vr(s, v);
 
         REQUIRE(v4.capacity() >= v4.size());
-
         REQUIRE(v4.size() == s);
-        for (vec4<int>::type::size_type i = 0; i < v4.size(); ++i)
-        {
-            REQUIRE(v4[i] == v);
-        }
+
+        requireEqual(v4, vr);
     }
 
     SECTION("Sixteen-size")
     {
-        vec4<int>::type::size_type const s = 16;
+        std::size_t const s = 16;
         vec4<int>::type const v4(s, v);
+        vect<int>::type const vr(s, v);
 
         REQUIRE(v4.capacity() >= v4.size());
-
         REQUIRE(v4.size() == s);
-        for (vec4<int>::type::size_type i = 0; i < v4.size(); ++i)
-        {
-            REQUIRE(v4[i] == v);
-        }
+
+        requireEqual(v4, vr);
     }
 }
 ////////////////////////////////////////////////////////////////////////////////
