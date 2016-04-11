@@ -506,16 +506,13 @@ TEST_CASE("At", "[opt][at]")
         SECTION("Non-empty")
         {
             int const arr[3] = {0, 1, 2};
-            vec4<int>::type const v4(arr, arr + 3);
+            std::size_t const s = 3;
+            vec4<int>::type const v4(arr, arr + s);
+            vect<int>::type const vr(arr, arr + s);
 
-            vec4<int>::type::size_type i = 0;
+            requireEqual(v4, vr);
 
-            for (; i < 3; ++i)
-            {
-                REQUIRE(v4[i] == arr[i]);
-            }
-
-            REQUIRE_THROWS_AS(v4.at(i), std::out_of_range);
+            REQUIRE_THROWS_AS(v4.at(s), std::out_of_range);
         }
     }
 
@@ -531,16 +528,13 @@ TEST_CASE("At", "[opt][at]")
         SECTION("Non-empty")
         {
             int const arr[3] = {0, 1, 2};
-            vec4<int>::type v4(arr, arr + 3);
+            std::size_t const s = 3;
+            vec4<int>::type const v4(arr, arr + s);
+            vect<int>::type const vr(arr, arr + s);
 
-            vec4<int>::type::size_type i = 0;
+            requireEqual(v4, vr);
 
-            for (; i < 3; ++i)
-            {
-                REQUIRE(v4[i] == arr[i]);
-            }
-
-            REQUIRE_THROWS_AS(v4.at(i), std::out_of_range);
+            REQUIRE_THROWS_AS(v4.at(s), std::out_of_range);
         }
     }
 }
