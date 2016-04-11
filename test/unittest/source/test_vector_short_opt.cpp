@@ -331,52 +331,66 @@ TEST_CASE("Resize", "[opt][resize]")
     SECTION("Empty")
     {
         vec4<int>::type v4;
+        vect<int>::type vr;
 
         SECTION("To zero")
         {
-            vec4<int>::type::size_type const r = 0;
+            std::size_t const r = 0;
 
             v4.resize(r);
+            vr.resize(r);
 
             REQUIRE(v4.capacity() >= v4.size());
             REQUIRE(v4.size() == r);
+
+            requireEqual(v4, vr);
         }
 
         SECTION("To non-zero")
         {
-            vec4<int>::type::size_type const r = 17;
+            std::size_t const r = 17;
 
             v4.resize(r);
+            vr.resize(r);
 
             REQUIRE(v4.capacity() >= v4.size());
             REQUIRE(v4.size() == r);
+
+            requireEqual(v4, vr);
         }
     }
 
     SECTION("Non-empty")
     {
         int const v = 7;
-        vec4<int>::type::size_type const s = 3;
+        std::size_t const s = 3;
         vec4<int>::type v4(s, v);
+        vect<int>::type vr(s, v);
 
         SECTION("To zero")
         {
-            vec4<int>::type::size_type const r = 0;
+            std::size_t const r = 0;
 
             v4.resize(r);
+            vr.resize(r);
 
             REQUIRE(v4.capacity() >= v4.size());
             REQUIRE(v4.size() == r);
+
+            requireEqual(v4, vr);
         }
 
         SECTION("To non-zero")
         {
-            vec4<int>::type::size_type const r = 17;
+            std::size_t const r = 17;
 
             v4.resize(r);
+            vr.resize(r);
 
             REQUIRE(v4.capacity() >= v4.size());
             REQUIRE(v4.size() == r);
+
+            requireEqual(v4, vr);
         }
     }
 }
