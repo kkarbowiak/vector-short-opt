@@ -473,25 +473,22 @@ TEST_CASE("Reserve", "[opt][reserve]")
 TEST_CASE("Subscript operator", "[opt][operator][subscript]")
 {
     int const arr[3] = {0, 1, 2};
+    std::size_t const s = 3;
 
     SECTION("Const")
     {
-        vec4<int>::type const v4(arr, arr + 3);
+        vec4<int>::type const v4(arr, arr + s);
+        vect<int>::type const vr(arr, arr + s);
 
-        for (vec4<int>::type::size_type i = 0; i < 3; ++i)
-        {
-            REQUIRE(v4[i] == arr[i]);
-        }
+        requireEqual(v4, vr);
     }
 
     SECTION("Non-const")
     {
         vec4<int>::type v4(arr, arr + 3);
+        vect<int>::type const vr(arr, arr + s);
 
-        for (vec4<int>::type::size_type i = 0; i < 3; ++i)
-        {
-            REQUIRE(v4[i] == arr[i]);
-        }
+        requireEqual(v4, vr);
     }
 }
 ////////////////////////////////////////////////////////////////////////////////
