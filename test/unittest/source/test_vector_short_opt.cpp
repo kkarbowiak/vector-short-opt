@@ -129,50 +129,44 @@ TEST_CASE("Copy ctor", "[opt][ctor][copy]")
 
     SECTION("Zero-range")
     {
-        vec4<int>::type::size_type const s = 0;
+        std::size_t const s = 0;
         vec4<int>::type const ov4(arr, arr + s);
+        vect<int>::type const ovr(arr, arr + s);
 
         vec4<int>::type const cv4(ov4);
 
         REQUIRE(cv4.capacity() >= cv4.size());
-
         REQUIRE(cv4.size() == s);
-        for (vec4<int>::type::size_type i = 0; i < cv4.size(); ++i)
-        {
-            REQUIRE(cv4[i] == ov4[i]);
-        }
+
+        requireEqual(cv4, ovr);
     }
 
     SECTION("One-range")
     {
-        vec4<int>::type::size_type const s = 1;
+        std::size_t const s = 1;
         vec4<int>::type const ov4(arr, arr + s);
+        vect<int>::type const ovr(arr, arr + s);
 
         vec4<int>::type const cv4(ov4);
 
         REQUIRE(cv4.capacity() >= cv4.size());
-
         REQUIRE(cv4.size() == s);
-        for (vec4<int>::type::size_type i = 0; i < cv4.size(); ++i)
-        {
-            REQUIRE(cv4[i] == ov4[i]);
-        }
+
+        requireEqual(cv4, ovr);
     }
 
     SECTION("Sixteen-range")
     {
-        vec4<int>::type::size_type const s = 16;
+        std::size_t const s = 16;
         vec4<int>::type const ov4(arr, arr + s);
+        vect<int>::type const ovr(arr, arr + s);
 
         vec4<int>::type const cv4(ov4);
 
         REQUIRE(cv4.capacity() >= cv4.size());
-
         REQUIRE(cv4.size() == s);
-        for (vec4<int>::type::size_type i = 0; i < cv4.size(); ++i)
-        {
-            REQUIRE(cv4[i] == ov4[i]);
-        }
+
+        requireEqual(cv4, ovr);
     }
 }
 ////////////////////////////////////////////////////////////////////////////////
