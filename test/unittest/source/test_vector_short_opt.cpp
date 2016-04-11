@@ -867,33 +867,44 @@ TEST_CASE("Insert raange", "[opt][insert][range]")
 TEST_CASE("Erase single", "[opt][erase][single]")
 {
     int const arr[5] = {0, 1, 2, 3, 4};
-    vec4<int>::type::size_type const s = 5;
+    std::size_t const s = 5;
+
     vec4<int>::type v4(arr, arr + s);
+    vect<int>::type vr(arr, arr + s);
 
     SECTION("Front")
     {
         vec4<int>::type::iterator i = v4.erase(v4.begin());
+        (void) vr.erase(vr.begin());
 
         REQUIRE(v4.capacity() >= v4.size());
         REQUIRE(i == v4.begin());
-        REQUIRE(*i == 1);
+
+        requireEqual(v4, vr);
     }
 
     SECTION("Middle")
     {
-        vec4<int>::type::iterator i = v4.erase(v4.begin() + 2);
+        std::size_t const o = 2;
+        vec4<int>::type::iterator i = v4.erase(v4.begin() + o);
+        (void) vr.erase(vr.begin() + o);
 
         REQUIRE(v4.capacity() >= v4.size());
-        REQUIRE(i == v4.begin() + 2);
-        REQUIRE(*i == 3);
+        REQUIRE(i == v4.begin() + o);
+
+        requireEqual(v4, vr);
     }
 
     SECTION("Back")
     {
-        vec4<int>::type::iterator i = v4.erase(v4.begin() + 4);
+        std::size_t const o = 4;
+        vec4<int>::type::iterator i = v4.erase(v4.begin() + o);
+        (void) vr.erase(vr.begin() + o);
 
         REQUIRE(v4.capacity() >= v4.size());
         REQUIRE(i == v4.end());
+
+        requireEqual(v4, vr);
     }
 }
 ////////////////////////////////////////////////////////////////////////////////
