@@ -706,18 +706,19 @@ TEST_CASE("Push back", "[opt][push back]")
 TEST_CASE("Pop back", "[opt][pop back]")
 {
     int const arr[4] = {0, 1, 2, 3};
+    std::size_t const s = 4;
 
-    vec4<int>::type v4(arr, arr + 4);
+    vec4<int>::type v4(arr, arr + s);
+    vect<int>::type vr(arr, arr + s);
 
-    for (vec4<int>::type::size_type i = 0; i < 4; ++i)
+    while (!v4.empty())
     {
-        REQUIRE(v4.back() == arr[3 - i]);
-
         v4.pop_back();
+        vr.pop_back();
 
         REQUIRE(v4.capacity() >= v4.size());
 
-        REQUIRE(v4.size() == 3 - i);
+        requireEqual(v4, vr);
     }
 }
 ////////////////////////////////////////////////////////////////////////////////
