@@ -689,19 +689,18 @@ TEST_CASE("Fill assign", "[opt][assign][fill]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Push back", "[opt][push back]")
 {
-    int const arr[4] = {0, 1, 2, 3};
-
     vec4<int>::type v4;
+    vect<int>::type vr;
 
-    for (vec4<int>::type::size_type i = 0; i < 4; ++i)
+    for (int i = 1; i < 5; ++i)
     {
-        v4.push_back(arr[i]);
-
-        REQUIRE(v4.capacity() >= v4.size());
-
-        REQUIRE(v4.size() == i + 1);
-        REQUIRE(v4[i] == arr[i]);
+        v4.push_back(i);
+        vr.push_back(i);
     }
+
+    REQUIRE(v4.capacity() >= v4.size());
+
+    requireEqual(v4, vr);
 }
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Pop back", "[opt][pop back]")
