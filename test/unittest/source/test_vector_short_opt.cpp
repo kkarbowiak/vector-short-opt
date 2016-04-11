@@ -730,35 +730,40 @@ TEST_CASE("Insert single", "[opt][insert][single]")
         int const v2 = 17;
 
         vec4<int>::type v4;
+        vect<int>::type vr;
 
         SECTION("To begin")
         {
             v4.insert(v4.begin(), v1);
+            vr.insert(vr.begin(), v1);
 
             REQUIRE(v4.capacity() >= v4.size());
-            REQUIRE(v4.size() == 1);
-            REQUIRE(v4.front() == v1);
+
+            requireEqual(v4, vr);
 
             v4.insert(v4.begin(), v2);
+            vr.insert(vr.begin(), v2);
 
             REQUIRE(v4.capacity() >= v4.size());
-            REQUIRE(v4.size() == 2);
-            REQUIRE(v4.front() == v2);
+
+            requireEqual(v4, vr);
         }
 
         SECTION("To end")
         {
             v4.insert(v4.end(), v1);
+            vr.insert(vr.end(), v1);
 
             REQUIRE(v4.capacity() >= v4.size());
-            REQUIRE(v4.size() == 1);
-            REQUIRE(v4.back() == v1);
+
+            requireEqual(v4, vr);
 
             v4.insert(v4.end(), v2);
+            vr.insert(vr.end(), v2);
 
             REQUIRE(v4.capacity() >= v4.size());
-            REQUIRE(v4.size() == 2);
-            REQUIRE(v4.back() == v2);
+
+            requireEqual(v4, vr);
         }
     }
 }
