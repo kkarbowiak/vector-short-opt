@@ -586,52 +586,47 @@ TEST_CASE("Range assign", "[opt][assign][range]")
     SECTION("Empty")
     {
         vec4<int>::type v4;
+        vect<int>::type vr;
 
         int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14, 15};
 
         SECTION("Zero-range")
         {
-            vec4<int>::type::size_type const s = 0;
+            std::size_t const s = 0;
 
             v4.assign(arr, arr + s);
+            vr.assign(arr, arr + s);
 
             REQUIRE(v4.capacity() >= v4.size());
-
             REQUIRE(v4.size() == s);
-            for (vec4<int>::type::size_type i = 0; i < v4.size(); ++i)
-            {
-                REQUIRE(v4[i] == arr[i]);
-            }
+
+            requireEqual(v4, vr);
         }
 
         SECTION("One-range")
         {
-            vec4<int>::type::size_type const s = 1;
+            std::size_t const s = 1;
 
             v4.assign(arr, arr + s);
+            vr.assign(arr, arr + s);
 
             REQUIRE(v4.capacity() >= v4.size());
-
             REQUIRE(v4.size() == s);
-            for (vec4<int>::type::size_type i = 0; i < v4.size(); ++i)
-            {
-                REQUIRE(v4[i] == arr[i]);
-            }
+
+            requireEqual(v4, vr);
         }
 
         SECTION("Sixteen-range")
         {
-            vec4<int>::type::size_type const s = 16;
+            std::size_t const s = 16;
 
             v4.assign(arr, arr + s);
+            vr.assign(arr, arr + s);
 
             REQUIRE(v4.capacity() >= v4.size());
-
             REQUIRE(v4.size() == s);
-            for (vec4<int>::type::size_type i = 0; i < v4.size(); ++i)
-            {
-                REQUIRE(v4[i] == arr[i]);
-            }
+
+            requireEqual(v4, vr);
         }
     }
 }
