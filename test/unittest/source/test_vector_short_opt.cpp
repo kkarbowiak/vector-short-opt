@@ -178,6 +178,7 @@ TEST_CASE("Copy assignment operator", "[opt][operator][copy][assignment]")
     {
         vec4<int>::type::size_type const s = 0;
         vec4<int>::type const ov4(arr, arr + s);
+        vect<int>::type const ovr(arr, arr + s);
         vec4<int>::type const dv4(arr + 2, arr + 5);
 
         vec4<int>::type cv4(dv4);
@@ -185,18 +186,16 @@ TEST_CASE("Copy assignment operator", "[opt][operator][copy][assignment]")
         cv4 = ov4;
 
         REQUIRE(cv4.capacity() >= cv4.size());
-
         REQUIRE(cv4.size() == s);
-        for (vec4<int>::type::size_type i = 0; i < cv4.size(); ++i)
-        {
-            REQUIRE(cv4[i] == ov4[i]);
-        }
+
+        requireEqual(cv4, ovr);
     }
 
     SECTION("One-size")
     {
         vec4<int>::type::size_type const s = 1;
         vec4<int>::type const ov4(arr, arr + s);
+        vect<int>::type const ovr(arr, arr + s);
         vec4<int>::type const dv4(arr + 2, arr + 5);
 
         vec4<int>::type cv4(dv4);
@@ -204,18 +203,16 @@ TEST_CASE("Copy assignment operator", "[opt][operator][copy][assignment]")
         cv4 = ov4;
 
         REQUIRE(cv4.capacity() >= cv4.size());
-
         REQUIRE(cv4.size() == s);
-        for (vec4<int>::type::size_type i = 0; i < cv4.size(); ++i)
-        {
-            REQUIRE(cv4[i] == ov4[i]);
-        }
+
+        requireEqual(cv4, ovr);
     }
 
     SECTION("Sixteen-size")
     {
         vec4<int>::type::size_type const s = 16;
         vec4<int>::type const ov4(arr, arr + s);
+        vect<int>::type const ovr(arr, arr + s);
         vec4<int>::type const dv4(arr + 2, arr + 5);
 
         vec4<int>::type cv4(dv4);
@@ -223,12 +220,9 @@ TEST_CASE("Copy assignment operator", "[opt][operator][copy][assignment]")
         cv4 = ov4;
 
         REQUIRE(cv4.capacity() >= cv4.size());
-
         REQUIRE(cv4.size() == s);
-        for (vec4<int>::type::size_type i = 0; i < cv4.size(); ++i)
-        {
-            REQUIRE(cv4[i] == ov4[i]);
-        }
+
+        requireEqual(cv4, ovr);
     }
 }
 ////////////////////////////////////////////////////////////////////////////////
