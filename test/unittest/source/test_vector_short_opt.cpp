@@ -640,52 +640,49 @@ TEST_CASE("Fill assign", "[opt][assign][fill]")
         SECTION("Zero-size")
         {
             vec4<int>::type v4;
+            vect<int>::type vr;
 
-            vec4<int>::type::size_type const s = 0;
+            std::size_t const s = 0;
 
             v4.assign(s, v);
+            vr.assign(s, v);
 
             REQUIRE(v4.capacity() >= v4.size());
-
             REQUIRE(v4.size() == s);
-            for (vec4<int>::type::size_type i = 0; i < v4.size(); ++i)
-            {
-                REQUIRE(v4[i] == v);
-            }
+
+            requireEqual(v4, vr);
         }
 
         SECTION("One-size")
         {
             vec4<int>::type v4;
+            vect<int>::type vr;
 
-            vec4<int>::type::size_type const s = 1;
+            std::size_t const s = 1;
 
             v4.assign(s, v);
+            vr.assign(s, v);
 
             REQUIRE(v4.capacity() >= v4.size());
-
             REQUIRE(v4.size() == s);
-            for (vec4<int>::type::size_type i = 0; i < v4.size(); ++i)
-            {
-                REQUIRE(v4[i] == v);
-            }
+
+            requireEqual(v4, vr);
         }
 
         SECTION("Sixteen-size")
         {
             vec4<int>::type v4;
+            vect<int>::type vr;
 
-            vec4<int>::type::size_type const s = 16;
+            std::size_t const s = 16;
 
             v4.assign(s, v);
+            vr.assign(s, v);
 
             REQUIRE(v4.capacity() >= v4.size());
-
             REQUIRE(v4.size() == s);
-            for (vec4<int>::type::size_type i = 0; i < v4.size(); ++i)
-            {
-                REQUIRE(v4[i] == v);
-            }
+
+            requireEqual(v4, vr);
         }
     }
 }
