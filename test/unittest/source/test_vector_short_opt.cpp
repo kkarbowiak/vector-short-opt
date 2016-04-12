@@ -681,12 +681,60 @@ TEST_CASE("Range assign", "[opt][assign][range]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Fill assign", "[opt][assign][fill]")
 {
+    int const v = 7;
+
     SECTION("Empty")
     {
-        int const v = 7;
-
         vec4<int>::type v4;
         vect<int>::type vr;
+
+        SECTION("Zero-size")
+        {
+            std::size_t const s = 0;
+
+            v4.assign(s, v);
+            vr.assign(s, v);
+
+            REQUIRE(v4.capacity() >= v4.size());
+            REQUIRE(v4.size() == s);
+
+            requireEqual(v4, vr);
+        }
+
+        SECTION("One-size")
+        {
+            std::size_t const s = 1;
+
+            v4.assign(s, v);
+            vr.assign(s, v);
+
+            REQUIRE(v4.capacity() >= v4.size());
+            REQUIRE(v4.size() == s);
+
+            requireEqual(v4, vr);
+        }
+
+        SECTION("Sixteen-size")
+        {
+            std::size_t const s = 16;
+
+            v4.assign(s, v);
+            vr.assign(s, v);
+
+            REQUIRE(v4.capacity() >= v4.size());
+            REQUIRE(v4.size() == s);
+
+            requireEqual(v4, vr);
+        }
+    }
+
+    SECTION("Non-empty")
+    {
+        int const vv = 11;
+        std::size_t const ss = 5;
+
+        vec4<int>::type v4(ss, vv);
+        vect<int>::type vr(ss, vv);
 
         SECTION("Zero-size")
         {
