@@ -637,11 +637,11 @@ TEST_CASE("Fill assign", "[opt][assign][fill]")
     {
         int const v = 7;
 
+        vec4<int>::type v4;
+        vect<int>::type vr;
+
         SECTION("Zero-size")
         {
-            vec4<int>::type v4;
-            vect<int>::type vr;
-
             std::size_t const s = 0;
 
             v4.assign(s, v);
@@ -655,9 +655,6 @@ TEST_CASE("Fill assign", "[opt][assign][fill]")
 
         SECTION("One-size")
         {
-            vec4<int>::type v4;
-            vect<int>::type vr;
-
             std::size_t const s = 1;
 
             v4.assign(s, v);
@@ -671,9 +668,6 @@ TEST_CASE("Fill assign", "[opt][assign][fill]")
 
         SECTION("Sixteen-size")
         {
-            vec4<int>::type v4;
-            vect<int>::type vr;
-
             std::size_t const s = 16;
 
             v4.assign(s, v);
