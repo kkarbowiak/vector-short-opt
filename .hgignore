@@ -5,3 +5,4 @@ Test/
 .vs/
 *.sdf
 *.opendb
+*.user
