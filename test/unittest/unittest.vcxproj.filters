@@ -21,6 +21,9 @@
     <ClInclude Include="..\..\vector_short_opt.h">
       <Filter>opt</Filter>
     </ClInclude>
+    <ClInclude Include="source\util_num_elems.h">
+      <Filter>source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">

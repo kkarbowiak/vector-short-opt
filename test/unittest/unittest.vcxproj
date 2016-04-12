@@ -214,6 +214,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\vector_short_opt.h" />
     <ClInclude Include="catch\catch.hpp" />
+    <ClInclude Include="source\util_num_elems.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp" />
