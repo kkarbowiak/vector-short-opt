@@ -583,12 +583,60 @@ TEST_CASE("Back", "[opt][back]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Range assign", "[opt][assign][range]")
 {
+    int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14, 15};
+
     SECTION("Empty")
     {
         vec4<int>::type v4;
         vect<int>::type vr;
 
-        int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14, 15};
+        SECTION("Zero-range")
+        {
+            std::size_t const s = 0;
+
+            v4.assign(arr, arr + s);
+            vr.assign(arr, arr + s);
+
+            REQUIRE(v4.capacity() >= v4.size());
+            REQUIRE(v4.size() == s);
+
+            requireEqual(v4, vr);
+        }
+
+        SECTION("One-range")
+        {
+            std::size_t const s = 1;
+
+            v4.assign(arr, arr + s);
+            vr.assign(arr, arr + s);
+
+            REQUIRE(v4.capacity() >= v4.size());
+            REQUIRE(v4.size() == s);
+
+            requireEqual(v4, vr);
+        }
+
+        SECTION("Sixteen-range")
+        {
+            std::size_t const s = 16;
+
+            v4.assign(arr, arr + s);
+            vr.assign(arr, arr + s);
+
+            REQUIRE(v4.capacity() >= v4.size());
+            REQUIRE(v4.size() == s);
+
+            requireEqual(v4, vr);
+        }
+    }
+
+    SECTION("Non-empty")
+    {
+        int const v = 7;
+        std::size_t const ss = 5;
+
+        vec4<int>::type v4(ss, v);
+        vect<int>::type vr(ss, v);
 
         SECTION("Zero-range")
         {
