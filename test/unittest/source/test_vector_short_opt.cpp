@@ -2,6 +2,8 @@
 
 #include "vector_short_opt.h"
 
+#include "util_num_elems.h"
+
 #include <stdexcept>
 #include <cstddef> // std::size_t
 
@@ -472,8 +474,8 @@ TEST_CASE("Reserve", "[opt][reserve]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Subscript operator", "[opt][operator][subscript]")
 {
-    int const arr[3] = {0, 1, 2};
-    std::size_t const s = 3;
+    int const arr[] = {0, 1, 2};
+    std::size_t const s = num_elems(arr);
 
     SECTION("Const")
     {
@@ -485,7 +487,7 @@ TEST_CASE("Subscript operator", "[opt][operator][subscript]")
 
     SECTION("Non-const")
     {
-        vec4<int>::type v4(arr, arr + 3);
+        vec4<int>::type v4(arr, arr + s);
         vect<int>::type const vr(arr, arr + s);
 
         requireEqual(v4, vr);
@@ -505,8 +507,8 @@ TEST_CASE("At", "[opt][at]")
 
         SECTION("Non-empty")
         {
-            int const arr[3] = {0, 1, 2};
-            std::size_t const s = 3;
+            int const arr[] = {0, 1, 2};
+            std::size_t const s = num_elems(arr);
             vec4<int>::type const v4(arr, arr + s);
             vect<int>::type const vr(arr, arr + s);
 
@@ -527,8 +529,8 @@ TEST_CASE("At", "[opt][at]")
 
         SECTION("Non-empty")
         {
-            int const arr[3] = {0, 1, 2};
-            std::size_t const s = 3;
+            int const arr[] = {0, 1, 2};
+            std::size_t const s = num_elems(arr);
             vec4<int>::type const v4(arr, arr + s);
             vect<int>::type const vr(arr, arr + s);
 
@@ -795,8 +797,8 @@ TEST_CASE("Push back", "[opt][push back]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Pop back", "[opt][pop back]")
 {
-    int const arr[4] = {0, 1, 2, 3};
-    std::size_t const s = 4;
+    int const arr[] = {0, 1, 2, 3};
+    std::size_t const s = num_elems(arr);
 
     vec4<int>::type v4(arr, arr + s);
     vect<int>::type vr(arr, arr + s);
@@ -956,8 +958,8 @@ TEST_CASE("Insert raange", "[opt][insert][range]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Erase single", "[opt][erase][single]")
 {
-    int const arr[5] = {0, 1, 2, 3, 4};
-    std::size_t const s = 5;
+    int const arr[] = {0, 1, 2, 3, 4};
+    std::size_t const s = num_elems(arr);
 
     vec4<int>::type v4(arr, arr + s);
     vect<int>::type vr(arr, arr + s);
@@ -1000,8 +1002,8 @@ TEST_CASE("Erase single", "[opt][erase][single]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Erase range", "[opt][erase][range]")
 {
-    int const arr[5] = {0, 1, 2, 3, 4};
-    std::size_t const s = 5;
+    int const arr[] = {0, 1, 2, 3, 4};
+    std::size_t const s = num_elems(arr);
 
     vec4<int>::type v4(arr, arr + s);
     vect<int>::type vr(arr, arr + s);
@@ -1046,11 +1048,11 @@ TEST_CASE("Erase range", "[opt][erase][range]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Swap", "[opt][swap]")
 {
-    int const arr_a[4] = {2, 3, 5, 7};
-    int const arr_b[7] = {11, 13, 17, 19, 23, 29, 31};
+    int const arr_a[] = {2, 3, 5, 7};
+    int const arr_b[] = {11, 13, 17, 19, 23, 29, 31};
 
-    vec4<int>::type v4_a(arr_a, arr_a + 4);
-    vec4<int>::type v4_b(arr_b, arr_b + 7);
+    vec4<int>::type v4_a(arr_a, arr_a + num_elems(arr_a));
+    vec4<int>::type v4_b(arr_b, arr_b + num_elems(arr_b));
 
     vec4<int>::type::size_type s_a = v4_a.size();
     int const * ptr_a = &v4_a.front();
@@ -1081,9 +1083,9 @@ TEST_CASE("Clear", "[opt][clear]")
 
     SECTION("Non-empty")
     {
-        int const arr[4] = {0, 1, 2, 3};
+        int const arr[] = {0, 1, 2, 3};
 
-        vec4<int>::type v4(arr, arr + 4);
+        vec4<int>::type v4(arr, arr + num_elems(arr));
 
         v4.clear();
 
@@ -1105,9 +1107,9 @@ TEST_CASE("Empty", "[opt][empty]")
 
     SECTION("Non-empty")
     {
-        int const arr[4] = {0, 1, 2, 3};
+        int const arr[] = {0, 1, 2, 3};
 
-        vec4<int>::type v4(arr, arr + 4);
+        vec4<int>::type v4(arr, arr + num_elems(arr));
 
         REQUIRE(!v4.empty());
     }
