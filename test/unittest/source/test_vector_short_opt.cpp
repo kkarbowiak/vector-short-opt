@@ -911,33 +911,46 @@ TEST_CASE("Erase single", "[opt][erase][single]")
 TEST_CASE("Erase range", "[opt][erase][range]")
 {
     int const arr[5] = {0, 1, 2, 3, 4};
-    vec4<int>::type::size_type const s = 5;
+    std::size_t const s = 5;
+
     vec4<int>::type v4(arr, arr + s);
+    vect<int>::type vr(arr, arr + s);
 
     SECTION("Front")
     {
-        vec4<int>::type::iterator i = v4.erase(v4.begin(), v4.begin() + 2);
+        std::size_t const o = 2;
+        vec4<int>::type::iterator i = v4.erase(v4.begin(), v4.begin() + o);
+        (void) vr.erase(vr.begin(), vr.begin() + o);
 
         REQUIRE(v4.capacity() >= v4.size());
         REQUIRE(i == v4.begin());
-        REQUIRE(*i == 2);
+
+        requireEqual(v4, vr);
     }
 
     SECTION("Middle")
     {
-        vec4<int>::type::iterator i = v4.erase(v4.begin() + 2, v4.begin() + 4);
+        std::size_t const o1 = 2;
+        std::size_t const o2 = 4;
+        vec4<int>::type::iterator i = v4.erase(v4.begin() + o1, v4.begin() + o2);
+        (void) vr.erase(vr.begin() + o1, vr.begin() + o2);
 
         REQUIRE(v4.capacity() >= v4.size());
         REQUIRE(i == v4.begin() + 2);
-        REQUIRE(*i == 4);
+
+        requireEqual(v4, vr);
     }
 
     SECTION("Back")
     {
-        vec4<int>::type::iterator i = v4.erase(v4.begin() + 4, v4.end());
+        std::size_t const o = 4;
+        vec4<int>::type::iterator i = v4.erase(v4.begin() + o, v4.end());
+        (void) vr.erase(vr.begin() + o, vr.end());
 
         REQUIRE(v4.capacity() >= v4.size());
         REQUIRE(i == v4.end());
+
+        requireEqual(v4, vr);
     }
 }
 ////////////////////////////////////////////////////////////////////////////////
