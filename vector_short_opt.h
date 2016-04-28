@@ -400,7 +400,25 @@ inline void vector_short_opt<T, N>::assign(InputIterator first, InputIterator la
 template<typename T, std::size_t N>
 inline void vector_short_opt<T, N>::assign(size_type n, value_type const & val)
 {
-    d_vector.assign(n, val);
+    if (d_array_used)
+    {
+        destroy_array();
+    }
+
+    if (n <= N)
+    {
+        d_array_used = true;
+
+        for (d_size = 0; d_size < n; ++d_size)
+        {
+            construct(d_size, val);
+        }
+    }
+    else
+    {
+        d_array_used = false;
+        d_vector.assign(n, val);
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
