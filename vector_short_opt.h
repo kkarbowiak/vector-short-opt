@@ -465,7 +465,43 @@ inline void vector_short_opt<T, N>::pop_back()
 template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::insert(iterator position, value_type const & val)
 {
-    return &*d_vector.insert(d_vector.begin() + std::distance(begin(), position), val);
+    iterator result;
+
+    if (d_array_used)
+    {
+        if (d_size < N)
+        {
+            if (position == end())
+            {
+                construct(d_size++, val);
+
+                result = position;
+            }
+            else
+            {
+                construct(d_size, *get_ptr(d_size - 1));
+                std::copy_backward(position, get_ptr(d_size - 1), get_ptr(d_size));
+                ++d_size;
+                *position = val;
+                result = position;
+            }
+        }
+        else
+        {
+            d_vector.reserve(N + 1);
+            d_vector.assign(begin(), end());
+
+            result = &*d_vector.insert(d_vector.begin() + (position - get_ptr(0)), val);
+
+            d_array_used = false;
+        }
+    }
+    else
+    {
+        result = &*d_vector.insert(d_vector.begin() + std::distance(begin(), position), val);
+    }
+
+    return result;
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
