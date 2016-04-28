@@ -136,8 +136,14 @@ inline vector_short_opt<T, N>::vector_short_opt(size_type n, value_type const & 
 template<typename T, std::size_t N>
 template <class InputIterator>
 inline vector_short_opt<T, N>::vector_short_opt(InputIterator first, InputIterator last, allocator_type const & alloc)
-    : d_vector(first, last, alloc)
+    : d_size(0)
+    , d_array_used(true)
+    , d_vector(alloc)
 {
+    for (InputIterator i = first; i != last; ++i)
+    {
+        push_back(*i);
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
