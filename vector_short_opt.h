@@ -316,13 +316,41 @@ inline typename vector_short_opt<T, N>::const_reference vector_short_opt<T, N>::
 template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::reference vector_short_opt<T, N>::at(size_type n)
 {
-    return d_vector.at(n);
+    if (d_array_used)
+    {
+        if (n < d_size)
+        {
+            return *get_ptr(n);
+        }
+        else
+        {
+            throw std::out_of_range("");
+        }
+    }
+    else
+    {
+        return d_vector.at(n);
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::const_reference vector_short_opt<T, N>::at(size_type n) const
 {
-    return d_vector.at(n);
+    if (d_array_used)
+    {
+        if (n < d_size)
+        {
+            return *get_ptr(n);
+        }
+        else
+        {
+            throw std::out_of_range("");
+        }
+    }
+    else
+    {
+        return d_vector.at(n);
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
