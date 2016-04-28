@@ -173,7 +173,7 @@ inline vector_short_opt<T, N>::~vector_short_opt()
 template<typename T, std::size_t N>
 inline vector_short_opt<T, N> & vector_short_opt<T, N>::operator=(vector_short_opt const & other)
 {
-    d_vector = other.d_vector;
+    assign(other.begin(), other.end()); // TODO: replace with proper assignment operation
 
     return *this;
 }
