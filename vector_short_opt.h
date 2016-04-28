@@ -164,6 +164,10 @@ inline vector_short_opt<T, N>::vector_short_opt(vector_short_opt const & other)
 template<typename T, std::size_t N>
 inline vector_short_opt<T, N>::~vector_short_opt()
 {
+    if (d_array_used)
+    {
+        destroy_array();
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
