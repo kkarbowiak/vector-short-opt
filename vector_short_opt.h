@@ -372,13 +372,17 @@ inline typename vector_short_opt<T, N>::const_reference vector_short_opt<T, N>::
 template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::reference vector_short_opt<T, N>::back()
 {
-    return d_vector.back();
+    return d_array_used
+        ? *get_ptr(d_size - 1)
+        : d_vector.front();
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::const_reference vector_short_opt<T, N>::back() const
 {
-    return d_vector.back();
+    return d_array_used
+        ? *get_ptr(d_size - 1)
+        : d_vector.front();
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
