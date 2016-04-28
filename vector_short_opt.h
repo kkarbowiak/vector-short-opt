@@ -537,7 +537,18 @@ template<typename T, std::size_t N>
 template <class InputIterator>
 inline void vector_short_opt<T, N>::insert(iterator position, InputIterator first, InputIterator last)
 {
-    d_vector.insert(d_vector.begin() + std::distance(begin(), position), first, last);
+    if (d_array_used)
+    {
+        while (first != last)
+        {
+            position = insert(position, *first);
+            ++position;
+        }
+    }
+    else
+    {
+        d_vector.insert(d_vector.begin() + std::distance(begin(), position), first, last);
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
