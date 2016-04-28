@@ -201,17 +201,21 @@ inline typename vector_short_opt<T, N>::const_iterator vector_short_opt<T, N>::b
 template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::end()
 {
-    return d_vector.empty()
-        ? NULL
-        : &d_vector[0] + d_vector.size();
+    return d_array_used
+        ? reinterpret_cast<iterator>(get_ptr(d_size))
+        : d_vector.empty()
+            ? NULL
+            : &d_vector[0] + d_vector.size();
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::const_iterator vector_short_opt<T, N>::end() const
 {
-    return d_vector.empty()
-        ? NULL
-        : &d_vector[0] + d_vector.size();
+    return d_array_used
+        ? reinterpret_cast<const_iterator>(get_ptr(d_size))
+        : d_vector.empty()
+            ? NULL
+            : &d_vector[0] + d_vector.size();
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
