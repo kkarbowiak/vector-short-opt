@@ -389,7 +389,12 @@ template<typename T, std::size_t N>
 template <class InputIterator>
 inline void vector_short_opt<T, N>::assign(InputIterator first, InputIterator last)
 {
-    d_vector.assign(first, last);
+    clear();
+
+    for (InputIterator i = first; i != last; ++i)
+    {
+        push_back(*i);
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
