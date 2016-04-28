@@ -1,0 +1,8 @@
+syntax: glob
+Release/
+Debug/
+Test/
+.vs/
+*.sdf
+*.opendb
+*.user
