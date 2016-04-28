@@ -424,7 +424,29 @@ inline void vector_short_opt<T, N>::assign(size_type n, value_type const & val)
 template<typename T, std::size_t N>
 inline void vector_short_opt<T, N>::push_back(value_type const & val)
 {
-    d_vector.push_back(val);
+    if (d_array_used)
+    {
+        if (d_size < N)
+        {
+            construct(d_size, val);
+
+            ++d_size;
+        }
+        else
+        {
+            d_vector.reserve(N + 1);
+
+            move_array_to_vector();
+
+            d_vector.push_back(val);
+
+            d_array_used = false;
+        }
+    }
+    else
+    {
+        d_vector.push_back(val);
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
