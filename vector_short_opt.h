@@ -90,6 +90,10 @@ namespace opt
             void construct(size_type index, value_type const & val);
             void destroy(size_type index);
 
+            void move_array_to_vector();
+
+            void destroy_array();
+
         private:
             char d_array[N * sizeof(T)];
             size_type d_size;
@@ -376,6 +380,23 @@ template<typename T, std::size_t N>
 inline void vector_short_opt<T, N>::destroy(size_type index)
 {
     get_ptr(index)->~T();
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T, std::size_t N>
+inline void vector_short_opt<T, N>::move_array_to_vector()
+{
+    d_vector.assign(get_ptr(0), get_ptr(d_size));
+
+    destroy_array();
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T, std::size_t N>
+inline void vector_short_opt<T, N>::destroy_array()
+{
+    for (size_type i = 0; i < d_size; ++i)
+    {
+        destroy(i);
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 }
