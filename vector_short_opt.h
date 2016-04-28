@@ -81,6 +81,10 @@ namespace opt
             allocator_type get_allocator() const;
 
         private:
+            pointer get_ptr(size_type index);
+            const_pointer get_ptr(size_type index) const;
+
+        private:
             char d_array[N * sizeof(T)];
             size_type d_size;
             bool d_array_used;
@@ -326,6 +330,22 @@ template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::allocator_type vector_short_opt<T, N>::get_allocator() const
 {
     return d_vector.get_allocator();
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T, std::size_t N>
+inline typename vector_short_opt<T, N>::pointer vector_short_opt<T, N>::get_ptr(size_type index)
+{
+    pointer p = reinterpret_cast<pointer>(d_array);
+
+    return (p + index);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T, std::size_t N>
+inline typename vector_short_opt<T, N>::const_pointer vector_short_opt<T, N>::get_ptr(size_type index) const
+{
+    const_pointer p = reinterpret_cast<const_pointer>(d_array);
+
+    return (p + index);
 }
 ////////////////////////////////////////////////////////////////////////////////
 }
