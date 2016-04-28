@@ -290,13 +290,27 @@ inline void vector_short_opt<T, N>::reserve(size_type n)
 template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::reference vector_short_opt<T, N>::operator[](size_type n)
 {
-    return d_vector[n];
+    if (d_array_used)
+    {
+        return *get_ptr(n);
+    }
+    else
+    {
+        return d_vector[n];
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::const_reference vector_short_opt<T, N>::operator[](size_type n) const
 {
-    return d_vector[n];
+    if (d_array_used)
+    {
+        return *get_ptr(n);
+    }
+    else
+    {
+        return d_vector[n];
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
