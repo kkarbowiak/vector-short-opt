@@ -221,7 +221,46 @@ inline typename vector_short_opt<T, N>::const_iterator vector_short_opt<T, N>::e
 template<typename T, std::size_t N>
 inline void vector_short_opt<T, N>::resize(size_type n, value_type val)
 {
-    d_vector.resize(n, val);
+    if (d_array_used)
+    {
+        if (n <= N)
+        {
+            if (n < d_size)
+            {
+                for (size_type i = n; i < d_size; ++i)
+                {
+                    destroy(i);
+                }
+
+                d_size = n;
+            }
+            else if (n == d_size)
+            {
+                // do nothing
+            }
+            else
+            {
+                for (; d_size != n; ++d_size)
+                {
+                    construct(d_size, val);
+                }
+            }
+        }
+        else
+        {
+            d_array_used = false;
+
+            d_vector.reserve(n);
+
+            move_array_to_vector();
+
+            d_vector.resize(n, val);
+        }
+    }
+    else
+    {
+        d_vector.resize(n, val);
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
