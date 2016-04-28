@@ -81,6 +81,9 @@ namespace opt
             allocator_type get_allocator() const;
 
         private:
+            char d_array[N * sizeof(T)];
+            size_type d_size;
+            bool d_array_used;
             std::vector<T> d_vector;
     };
 }
