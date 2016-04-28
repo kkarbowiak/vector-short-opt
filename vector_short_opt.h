@@ -266,7 +266,25 @@ inline void vector_short_opt<T, N>::resize(size_type n, value_type val)
 template<typename T, std::size_t N>
 inline void vector_short_opt<T, N>::reserve(size_type n)
 {
-    d_vector.reserve(n);
+    if (d_array_used)
+    {
+        if (n <= N)
+        {
+            // do nothing
+        }
+        else
+        {
+            d_array_used = false;
+
+            d_vector.reserve(n);
+
+            move_array_to_vector();
+        }
+    }
+    else
+    {
+        d_vector.reserve(n);
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
