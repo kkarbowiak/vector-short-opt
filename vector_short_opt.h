@@ -507,7 +507,30 @@ inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::insert(
 template<typename T, std::size_t N>
 inline void vector_short_opt<T, N>::insert(iterator position, size_type n, value_type const & val)
 {
-    d_vector.insert(d_vector.begin() + std::distance(begin(), position), n, val);
+    if (d_array_used)
+    {
+        if (d_size + n <= N)
+        {
+            while (n-- > 0)
+            {
+                position = insert(position, val);
+                ++position;
+            }
+        }
+        else
+        {
+            d_vector.reserve(d_size + n);
+            d_vector.assign(begin(), end());
+
+            d_vector.insert(d_vector.begin() + (position - get_ptr(0)), n, val);
+
+            d_array_used = false;
+        }
+    }
+    else
+    {
+        d_vector.insert(d_vector.begin() + std::distance(begin(), position), n, val);
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
