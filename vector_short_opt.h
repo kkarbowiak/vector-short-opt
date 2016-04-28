@@ -452,7 +452,14 @@ inline void vector_short_opt<T, N>::push_back(value_type const & val)
 template<typename T, std::size_t N>
 inline void vector_short_opt<T, N>::pop_back()
 {
-    d_vector.pop_back();
+    if (d_array_used)
+    {
+        destroy(--d_size);
+    }
+    else
+    {
+        d_vector.pop_back();
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
