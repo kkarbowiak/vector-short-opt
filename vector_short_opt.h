@@ -181,17 +181,21 @@ inline vector_short_opt<T, N> & vector_short_opt<T, N>::operator=(vector_short_o
 template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::begin()
 {
-    return d_vector.empty()
-        ? NULL
-        : &d_vector[0];
+    return d_array_used
+        ? reinterpret_cast<iterator>(get_ptr(0))
+        : d_vector.empty()
+            ? NULL
+            : &d_vector[0];
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::const_iterator vector_short_opt<T, N>::begin() const
 {
-    return d_vector.empty()
-        ? NULL
-        : &d_vector[0];
+    return d_array_used
+        ? reinterpret_cast<const_iterator>(get_ptr(0))
+        : d_vector.empty()
+            ? NULL
+            : &d_vector[0];
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
