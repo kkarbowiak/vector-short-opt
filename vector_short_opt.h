@@ -108,7 +108,9 @@ namespace opt
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
 inline vector_short_opt<T, N>::vector_short_opt(allocator_type const & alloc)
-    : d_vector(alloc)
+    : d_size(0)
+    , d_array_used(true)
+    , d_vector(alloc)
 {
 }
 ////////////////////////////////////////////////////////////////////////////////
