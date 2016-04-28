@@ -87,6 +87,9 @@ namespace opt
             reference get_ref(size_type index);
             const_reference get_ref(size_type index) const;
 
+            void construct(size_type index, value_type const & val);
+            void destroy(size_type index);
+
         private:
             char d_array[N * sizeof(T)];
             size_type d_size;
@@ -361,6 +364,18 @@ template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::const_reference vector_short_opt<T, N>::get_ref(size_type index) const
 {
     return *get_ptr(index);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T, std::size_t N>
+inline void vector_short_opt<T, N>::construct(size_type index, value_type const & val)
+{
+    (void) new(get_ptr(index)) T(val);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T, std::size_t N>
+inline void vector_short_opt<T, N>::destroy(size_type index)
+{
+    get_ptr(index)->~T();
 }
 ////////////////////////////////////////////////////////////////////////////////
 }
