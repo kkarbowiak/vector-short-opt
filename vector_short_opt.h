@@ -2,6 +2,7 @@
 #define SHORT_VECTOR_OPT_H__DDK
 
 #include <vector>
+#include <algorithm>
 #include <cstddef>
 
 
