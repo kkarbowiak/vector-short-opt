@@ -619,7 +619,9 @@ inline void vector_short_opt<T, N>::clear()
 template<typename T, std::size_t N>
 inline bool vector_short_opt<T, N>::empty() const
 {
-    return d_vector.empty();
+    return d_array_used
+        ? d_size == 0
+        : d_vector.empty();
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
