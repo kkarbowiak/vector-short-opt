@@ -604,7 +604,16 @@ inline void vector_short_opt<T, N>::swap(vector_short_opt & other)
 template<typename T, std::size_t N>
 inline void vector_short_opt<T, N>::clear()
 {
-    d_vector.clear();
+    if (d_array_used)
+    {
+        destroy_array();
+
+        d_size = 0;
+    }
+    else
+    {
+        d_vector.clear();
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
