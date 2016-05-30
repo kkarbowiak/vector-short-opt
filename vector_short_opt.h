@@ -554,11 +554,22 @@ inline void vector_short_opt<T, N>::insert(iterator position, InputIterator firs
 template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::erase(iterator position)
 {
-    std::vector<T>::iterator i = d_vector.erase(d_vector.begin() + std::distance(begin(), position));
+    if (d_array_used)
+    {
+        std::copy_backward(position + 1, end(), position);
 
-    return i  != d_vector.end()
-        ? &*i
-        : end();
+        destroy(d_size--);
+
+        return position;
+    }
+    else
+    {
+        std::vector<T>::iterator i = d_vector.erase(d_vector.begin() + std::distance(begin(), position));
+
+        return i != d_vector.end()
+            ? &*i
+            : end();
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
