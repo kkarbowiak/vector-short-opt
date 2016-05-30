@@ -575,11 +575,24 @@ inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::erase(i
 template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::erase(iterator first, iterator last)
 {
-    std::vector<T>::iterator i = d_vector.erase(d_vector.begin() + std::distance(begin(), first), d_vector.begin() + std::distance(begin(), last));
+    if (d_array_used)
+    {
+        iterator i = first;
+        while (i != last)
+        {
+            erase(i);
+        }
 
-    return i != d_vector.end()
-        ? &*i
-        : end();
+        return first;
+    }
+    else
+    {
+        std::vector<T>::iterator i = d_vector.erase(d_vector.begin() + std::distance(begin(), first), d_vector.begin() + std::distance(begin(), last));
+
+        return i != d_vector.end()
+            ? &*i
+            : end();
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
