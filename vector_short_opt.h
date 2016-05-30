@@ -635,7 +635,9 @@ inline typename vector_short_opt<T, N>::size_type vector_short_opt<T, N>::size()
 template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::size_type vector_short_opt<T, N>::capacity() const
 {
-    return d_vector.capacity();
+    return d_array_used
+        ? N
+        : d_vector.capacity();
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
