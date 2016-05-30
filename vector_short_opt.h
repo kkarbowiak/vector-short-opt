@@ -70,8 +70,6 @@ namespace opt
             iterator erase(iterator position);
             iterator erase(iterator first, iterator last);
 
-            void swap(vector_short_opt & other);
-
             void clear();
 
             bool empty() const;
@@ -594,12 +592,6 @@ inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::erase(i
             ? &*i
             : end();
     }
-}
-////////////////////////////////////////////////////////////////////////////////
-template<typename T, std::size_t N>
-inline void vector_short_opt<T, N>::swap(vector_short_opt & other)
-{
-    std::swap(d_vector, other.d_vector);
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>

@@ -1046,27 +1046,6 @@ TEST_CASE("Erase range", "[opt][erase][range]")
     }
 }
 ////////////////////////////////////////////////////////////////////////////////
-TEST_CASE("Swap", "[opt][swap]")
-{
-    int const arr_a[] = {2, 3, 5, 7};
-    int const arr_b[] = {11, 13, 17, 19, 23, 29, 31};
-
-    vec4<int>::type v4_a(arr_a, arr_a + num_elems(arr_a));
-    vec4<int>::type v4_b(arr_b, arr_b + num_elems(arr_b));
-
-    vec4<int>::type::size_type s_a = v4_a.size();
-    int const * ptr_a = &v4_a.front();
-    vec4<int>::type::size_type s_b = v4_b.size();
-    int const * ptr_b = &v4_b.front();
-
-    v4_a.swap(v4_b);
-
-    REQUIRE(v4_b.size() == s_a);
-    REQUIRE(&v4_b.front() == ptr_a);
-    REQUIRE(v4_a.size() == s_b);
-    REQUIRE(&v4_a.front() == ptr_b);
-}
-////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Clear", "[opt][clear]")
 {
     SECTION("Empty")
