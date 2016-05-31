@@ -563,7 +563,7 @@ inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::erase(i
     }
     else
     {
-        std::vector<T>::iterator i = d_vector.erase(d_vector.begin() + std::distance(begin(), position));
+        typename std::vector<T>::iterator i = d_vector.erase(d_vector.begin() + std::distance(begin(), position));
 
         return i != d_vector.end()
             ? &*i
@@ -586,7 +586,7 @@ inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::erase(i
     }
     else
     {
-        std::vector<T>::iterator i = d_vector.erase(d_vector.begin() + std::distance(begin(), first), d_vector.begin() + std::distance(begin(), last));
+        typename std::vector<T>::iterator i = d_vector.erase(d_vector.begin() + std::distance(begin(), first), d_vector.begin() + std::distance(begin(), last));
 
         return i != d_vector.end()
             ? &*i
