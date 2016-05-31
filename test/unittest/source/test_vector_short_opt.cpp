@@ -86,7 +86,7 @@ TEST_CASE("Fill ctor", "[opt][ctor][fill]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Range ctor", "[opt][ctor][range]")
 {
-    int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14, 15};
+    int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 
     SECTION("Zero-range")
     {
@@ -127,7 +127,7 @@ TEST_CASE("Range ctor", "[opt][ctor][range]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Copy ctor", "[opt][ctor][copy]")
 {
-    int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14, 15};
+    int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 
     SECTION("Zero-range")
     {
@@ -174,7 +174,7 @@ TEST_CASE("Copy ctor", "[opt][ctor][copy]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Copy assignment operator", "[opt][operator][copy][assignment]")
 {
-    int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14, 15};
+    int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 
     SECTION("Zero-size")
     {
@@ -585,7 +585,7 @@ TEST_CASE("Back", "[opt][back]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Range assign", "[opt][assign][range]")
 {
-    int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14, 15};
+    int const arr[16] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 
     SECTION("Empty")
     {
