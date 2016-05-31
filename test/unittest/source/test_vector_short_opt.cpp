@@ -20,12 +20,16 @@ struct vect
     typedef std::vector<T> type;
 };
 
-void requireEqual(vec4<int>::type const & v4, vect<int>::type const & vr)
+typedef vec4<int>::type vec4i;
+typedef vect<int>::type vecti;
+
+
+void requireEqual(vec4i const & v4, vecti const & vr)
 {
     REQUIRE(v4.size() == vr.size());
 
-    vec4<int>::type::size_type v4i = 0;
-    vect<int>::type::size_type vri = 0;
+    vec4i::size_type v4i = 0;
+    vecti::size_type vri = 0;
 
     for (; v4i != v4.size() && vri != vr.size(); ++v4i, ++vri)
     {
@@ -36,7 +40,7 @@ void requireEqual(vec4<int>::type const & v4, vect<int>::type const & vr)
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Default ctor", "[opt][ctor][default]")
 {
-    vec4<int>::type const v4;
+    vec4i const v4;
 
     REQUIRE(v4.capacity() >= v4.size());
 
@@ -50,8 +54,8 @@ TEST_CASE("Fill ctor", "[opt][ctor][fill]")
     SECTION("Zero-size")
     {
         std::size_t const s = 0;
-        vec4<int>::type const v4(s, v);
-        vect<int>::type const vr(s, v);
+        vec4i const v4(s, v);
+        vecti const vr(s, v);
 
         REQUIRE(v4.capacity() >= v4.size());
         REQUIRE(v4.size() == s);
@@ -62,8 +66,8 @@ TEST_CASE("Fill ctor", "[opt][ctor][fill]")
     SECTION("One-size")
     {
         std::size_t const s = 1;
-        vec4<int>::type const v4(s, v);
-        vect<int>::type const vr(s, v);
+        vec4i const v4(s, v);
+        vecti const vr(s, v);
 
         REQUIRE(v4.capacity() >= v4.size());
         REQUIRE(v4.size() == s);
@@ -74,8 +78,8 @@ TEST_CASE("Fill ctor", "[opt][ctor][fill]")
     SECTION("Sixteen-size")
     {
         std::size_t const s = 16;
-        vec4<int>::type const v4(s, v);
-        vect<int>::type const vr(s, v);
+        vec4i const v4(s, v);
+        vecti const vr(s, v);
 
         REQUIRE(v4.capacity() >= v4.size());
         REQUIRE(v4.size() == s);
@@ -91,8 +95,8 @@ TEST_CASE("Range ctor", "[opt][ctor][range]")
     SECTION("Zero-range")
     {
         std::size_t const s = 0;
-        vec4<int>::type const v4(arr, arr + s);
-        vect<int>::type const vr(arr, arr + s);
+        vec4i const v4(arr, arr + s);
+        vecti const vr(arr, arr + s);
 
         REQUIRE(v4.capacity() >= v4.size());
         REQUIRE(v4.size() == s);
@@ -103,8 +107,8 @@ TEST_CASE("Range ctor", "[opt][ctor][range]")
     SECTION("One-range")
     {
         std::size_t const s = 1;
-        vec4<int>::type const v4(arr, arr + s);
-        vect<int>::type const vr(arr, arr + s);
+        vec4i const v4(arr, arr + s);
+        vecti const vr(arr, arr + s);
 
         REQUIRE(v4.capacity() >= v4.size());
         REQUIRE(v4.size() == s);
@@ -115,8 +119,8 @@ TEST_CASE("Range ctor", "[opt][ctor][range]")
     SECTION("Sixteen-range")
     {
         std::size_t const s = 16;
-        vec4<int>::type const v4(arr, arr + s);
-        vect<int>::type const vr(arr, arr + s);
+        vec4i const v4(arr, arr + s);
+        vecti const vr(arr, arr + s);
 
         REQUIRE(v4.capacity() >= v4.size());
         REQUIRE(v4.size() == s);
@@ -132,10 +136,10 @@ TEST_CASE("Copy ctor", "[opt][ctor][copy]")
     SECTION("Zero-range")
     {
         std::size_t const s = 0;
-        vec4<int>::type const ov4(arr, arr + s);
-        vect<int>::type const ovr(arr, arr + s);
+        vec4i const ov4(arr, arr + s);
+        vecti const ovr(arr, arr + s);
 
-        vec4<int>::type const cv4(ov4);
+        vec4i const cv4(ov4);
 
         REQUIRE(cv4.capacity() >= cv4.size());
         REQUIRE(cv4.size() == s);
@@ -146,10 +150,10 @@ TEST_CASE("Copy ctor", "[opt][ctor][copy]")
     SECTION("One-range")
     {
         std::size_t const s = 1;
-        vec4<int>::type const ov4(arr, arr + s);
-        vect<int>::type const ovr(arr, arr + s);
+        vec4i const ov4(arr, arr + s);
+        vecti const ovr(arr, arr + s);
 
-        vec4<int>::type const cv4(ov4);
+        vec4i const cv4(ov4);
 
         REQUIRE(cv4.capacity() >= cv4.size());
         REQUIRE(cv4.size() == s);
@@ -160,10 +164,10 @@ TEST_CASE("Copy ctor", "[opt][ctor][copy]")
     SECTION("Sixteen-range")
     {
         std::size_t const s = 16;
-        vec4<int>::type const ov4(arr, arr + s);
-        vect<int>::type const ovr(arr, arr + s);
+        vec4i const ov4(arr, arr + s);
+        vecti const ovr(arr, arr + s);
 
-        vec4<int>::type const cv4(ov4);
+        vec4i const cv4(ov4);
 
         REQUIRE(cv4.capacity() >= cv4.size());
         REQUIRE(cv4.size() == s);
@@ -178,12 +182,12 @@ TEST_CASE("Copy assignment operator", "[opt][operator][copy][assignment]")
 
     SECTION("Zero-size")
     {
-        vec4<int>::type::size_type const s = 0;
-        vec4<int>::type const ov4(arr, arr + s);
-        vect<int>::type const ovr(arr, arr + s);
-        vec4<int>::type const dv4(arr + 2, arr + 5);
+        vec4i::size_type const s = 0;
+        vec4i const ov4(arr, arr + s);
+        vecti const ovr(arr, arr + s);
+        vec4i const dv4(arr + 2, arr + 5);
 
-        vec4<int>::type cv4(dv4);
+        vec4i cv4(dv4);
 
         cv4 = ov4;
 
@@ -195,12 +199,12 @@ TEST_CASE("Copy assignment operator", "[opt][operator][copy][assignment]")
 
     SECTION("One-size")
     {
-        vec4<int>::type::size_type const s = 1;
-        vec4<int>::type const ov4(arr, arr + s);
-        vect<int>::type const ovr(arr, arr + s);
-        vec4<int>::type const dv4(arr + 2, arr + 5);
+        vec4i::size_type const s = 1;
+        vec4i const ov4(arr, arr + s);
+        vecti const ovr(arr, arr + s);
+        vec4i const dv4(arr + 2, arr + 5);
 
-        vec4<int>::type cv4(dv4);
+        vec4i cv4(dv4);
 
         cv4 = ov4;
 
@@ -212,12 +216,12 @@ TEST_CASE("Copy assignment operator", "[opt][operator][copy][assignment]")
 
     SECTION("Sixteen-size")
     {
-        vec4<int>::type::size_type const s = 16;
-        vec4<int>::type const ov4(arr, arr + s);
-        vect<int>::type const ovr(arr, arr + s);
-        vec4<int>::type const dv4(arr + 2, arr + 5);
+        vec4i::size_type const s = 16;
+        vec4i const ov4(arr, arr + s);
+        vecti const ovr(arr, arr + s);
+        vec4i const dv4(arr + 2, arr + 5);
 
-        vec4<int>::type cv4(dv4);
+        vec4i cv4(dv4);
 
         cv4 = ov4;
 
@@ -234,7 +238,7 @@ TEST_CASE("Begin", "[opt][begin]")
     {
         SECTION("Const")
         {
-            vec4<int>::type const v4;
+            vec4i const v4;
 
             REQUIRE(v4.capacity() >= v4.size());
 
@@ -243,7 +247,7 @@ TEST_CASE("Begin", "[opt][begin]")
 
         SECTION("Non-const")
         {
-            vec4<int>::type v4;
+            vec4i v4;
 
             REQUIRE(v4.capacity() >= v4.size());
 
@@ -254,11 +258,11 @@ TEST_CASE("Begin", "[opt][begin]")
     SECTION("Non-empty")
     {
         int const v = 7;
-        vec4<int>::type::size_type const s = 1;
+        vec4i::size_type const s = 1;
 
         SECTION("Const")
         {
-            vec4<int>::type const v4(s, v);
+            vec4i const v4(s, v);
 
             REQUIRE(v4.capacity() >= v4.size());
 
@@ -268,7 +272,7 @@ TEST_CASE("Begin", "[opt][begin]")
 
         SECTION("Non-const")
         {
-            vec4<int>::type v4(s, v);
+            vec4i v4(s, v);
 
             REQUIRE(v4.capacity() >= v4.size());
 
@@ -284,7 +288,7 @@ TEST_CASE("End", "[opt][end]")
     {
         SECTION("Const")
         {
-            vec4<int>::type const v4;
+            vec4i const v4;
 
             REQUIRE(v4.capacity() >= v4.size());
 
@@ -293,7 +297,7 @@ TEST_CASE("End", "[opt][end]")
 
         SECTION("Non-const")
         {
-            vec4<int>::type v4;
+            vec4i v4;
 
             REQUIRE(v4.capacity() >= v4.size());
 
@@ -304,11 +308,11 @@ TEST_CASE("End", "[opt][end]")
     SECTION("Non-empty")
     {
         int const v = 7;
-        vec4<int>::type::size_type const s = 1;
+        vec4i::size_type const s = 1;
 
         SECTION("Const")
         {
-            vec4<int>::type const v4(s, v);
+            vec4i const v4(s, v);
 
             REQUIRE(v4.capacity() >= v4.size());
 
@@ -318,7 +322,7 @@ TEST_CASE("End", "[opt][end]")
 
         SECTION("Non-const")
         {
-            vec4<int>::type v4(s, v);
+            vec4i v4(s, v);
 
             REQUIRE(v4.capacity() >= v4.size());
 
@@ -332,8 +336,8 @@ TEST_CASE("Resize", "[opt][resize]")
 {
     SECTION("Empty")
     {
-        vec4<int>::type v4;
-        vect<int>::type vr;
+        vec4i v4;
+        vecti vr;
 
         SECTION("To zero")
         {
@@ -366,8 +370,8 @@ TEST_CASE("Resize", "[opt][resize]")
     {
         int const v = 7;
         std::size_t const s = 3;
-        vec4<int>::type v4(s, v);
-        vect<int>::type vr(s, v);
+        vec4i v4(s, v);
+        vecti vr(s, v);
 
         SECTION("To zero")
         {
@@ -401,11 +405,11 @@ TEST_CASE("Reserve", "[opt][reserve]")
 {
     SECTION("Empty")
     {
-        vec4<int>::type v4;
+        vec4i v4;
 
         SECTION("To zero")
         {
-            vec4<int>::type::size_type const r = 0;
+            vec4i::size_type const r = 0;
 
             v4.reserve(r);
 
@@ -417,7 +421,7 @@ TEST_CASE("Reserve", "[opt][reserve]")
 
         SECTION("To non-zero")
         {
-            vec4<int>::type::size_type const r = 7;
+            vec4i::size_type const r = 7;
 
             v4.reserve(r);
 
@@ -431,12 +435,12 @@ TEST_CASE("Reserve", "[opt][reserve]")
     SECTION("Non-empty")
     {
         int const v = 7;
-        vec4<int>::type::size_type const s = 4;
-        vec4<int>::type v4(s, v);
+        vec4i::size_type const s = 4;
+        vec4i v4(s, v);
 
         SECTION("To zero")
         {
-            vec4<int>::type::size_type const r = 0;
+            vec4i::size_type const r = 0;
 
             v4.reserve(r);
 
@@ -448,7 +452,7 @@ TEST_CASE("Reserve", "[opt][reserve]")
 
         SECTION("To same")
         {
-            vec4<int>::type::size_type const r = s;
+            vec4i::size_type const r = s;
 
             v4.reserve(r);
 
@@ -460,7 +464,7 @@ TEST_CASE("Reserve", "[opt][reserve]")
 
         SECTION("To more")
         {
-            vec4<int>::type::size_type const r = s + 3;
+            vec4i::size_type const r = s + 3;
 
             v4.reserve(r);
 
@@ -479,16 +483,16 @@ TEST_CASE("Subscript operator", "[opt][operator][subscript]")
 
     SECTION("Const")
     {
-        vec4<int>::type const v4(arr, arr + s);
-        vect<int>::type const vr(arr, arr + s);
+        vec4i const v4(arr, arr + s);
+        vecti const vr(arr, arr + s);
 
         requireEqual(v4, vr);
     }
 
     SECTION("Non-const")
     {
-        vec4<int>::type v4(arr, arr + s);
-        vect<int>::type const vr(arr, arr + s);
+        vec4i v4(arr, arr + s);
+        vecti const vr(arr, arr + s);
 
         requireEqual(v4, vr);
     }
@@ -500,7 +504,7 @@ TEST_CASE("At", "[opt][at]")
     {
         SECTION("Empty")
         {
-            vec4<int>::type const v4;
+            vec4i const v4;
 
             REQUIRE_THROWS_AS(v4.at(0), std::out_of_range);
         }
@@ -509,8 +513,8 @@ TEST_CASE("At", "[opt][at]")
         {
             int const arr[] = {0, 1, 2};
             std::size_t const s = num_elems(arr);
-            vec4<int>::type const v4(arr, arr + s);
-            vect<int>::type const vr(arr, arr + s);
+            vec4i const v4(arr, arr + s);
+            vecti const vr(arr, arr + s);
 
             requireEqual(v4, vr);
 
@@ -522,7 +526,7 @@ TEST_CASE("At", "[opt][at]")
     {
         SECTION("Empty")
         {
-            vec4<int>::type v4;
+            vec4i v4;
 
             REQUIRE_THROWS_AS(v4.at(0), std::out_of_range);
         }
@@ -531,8 +535,8 @@ TEST_CASE("At", "[opt][at]")
         {
             int const arr[] = {0, 1, 2};
             std::size_t const s = num_elems(arr);
-            vec4<int>::type const v4(arr, arr + s);
-            vect<int>::type const vr(arr, arr + s);
+            vec4i const v4(arr, arr + s);
+            vecti const vr(arr, arr + s);
 
             requireEqual(v4, vr);
 
@@ -549,14 +553,14 @@ TEST_CASE("Front", "[opt][front]")
 
     SECTION("Const")
     {
-        vec4<int>::type const v4(arr, arr + 2);
+        vec4i const v4(arr, arr + 2);
 
         REQUIRE(v4.front() == f);
     }
 
     SECTION("Non-const")
     {
-        vec4<int>::type v4(arr, arr + 2);
+        vec4i v4(arr, arr + 2);
 
         REQUIRE(v4.front() == f);
     }
@@ -570,14 +574,14 @@ TEST_CASE("Back", "[opt][back]")
 
     SECTION("Const")
     {
-        vec4<int>::type const v4(arr, arr + 2);
+        vec4i const v4(arr, arr + 2);
 
         REQUIRE(v4.back() == b);
     }
 
     SECTION("Non-const")
     {
-        vec4<int>::type v4(arr, arr + 2);
+        vec4i v4(arr, arr + 2);
 
         REQUIRE(v4.back() == b);
     }
@@ -589,8 +593,8 @@ TEST_CASE("Range assign", "[opt][assign][range]")
 
     SECTION("Empty")
     {
-        vec4<int>::type v4;
-        vect<int>::type vr;
+        vec4i v4;
+        vecti vr;
 
         SECTION("Zero-range")
         {
@@ -637,8 +641,8 @@ TEST_CASE("Range assign", "[opt][assign][range]")
         int const v = 7;
         std::size_t const ss = 5;
 
-        vec4<int>::type v4(ss, v);
-        vect<int>::type vr(ss, v);
+        vec4i v4(ss, v);
+        vecti vr(ss, v);
 
         SECTION("Zero-range")
         {
@@ -687,8 +691,8 @@ TEST_CASE("Fill assign", "[opt][assign][fill]")
 
     SECTION("Empty")
     {
-        vec4<int>::type v4;
-        vect<int>::type vr;
+        vec4i v4;
+        vecti vr;
 
         SECTION("Zero-size")
         {
@@ -735,8 +739,8 @@ TEST_CASE("Fill assign", "[opt][assign][fill]")
         int const vv = 11;
         std::size_t const ss = 5;
 
-        vec4<int>::type v4(ss, vv);
-        vect<int>::type vr(ss, vv);
+        vec4i v4(ss, vv);
+        vecti vr(ss, vv);
 
         SECTION("Zero-size")
         {
@@ -781,8 +785,8 @@ TEST_CASE("Fill assign", "[opt][assign][fill]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Push back", "[opt][push back]")
 {
-    vec4<int>::type v4;
-    vect<int>::type vr;
+    vec4i v4;
+    vecti vr;
 
     for (int i = 1; i < 5; ++i)
     {
@@ -800,8 +804,8 @@ TEST_CASE("Pop back", "[opt][pop back]")
     int const arr[] = {0, 1, 2, 3};
     std::size_t const s = num_elems(arr);
 
-    vec4<int>::type v4(arr, arr + s);
-    vect<int>::type vr(arr, arr + s);
+    vec4i v4(arr, arr + s);
+    vecti vr(arr, arr + s);
 
     while (!v4.empty())
     {
@@ -821,8 +825,8 @@ TEST_CASE("Insert single", "[opt][insert][single]")
         int const v1 = 7;
         int const v2 = 17;
 
-        vec4<int>::type v4;
-        vect<int>::type vr;
+        vec4i v4;
+        vecti vr;
 
         SECTION("To begin")
         {
@@ -869,8 +873,8 @@ TEST_CASE("Insert fill", "[opt][insert][fill]")
 
         std::size_t n = 3;
 
-        vec4<int>::type v4;
-        vect<int>::type vr;
+        vec4i v4;
+        vecti vr;
 
         SECTION("To begin")
         {
@@ -917,8 +921,8 @@ TEST_CASE("Insert raange", "[opt][insert][range]")
 
         std::size_t n = 3;
 
-        vec4<int>::type v4;
-        vect<int>::type vr;
+        vec4i v4;
+        vecti vr;
 
         SECTION("To begin")
         {
@@ -961,12 +965,12 @@ TEST_CASE("Erase single", "[opt][erase][single]")
     int const arr[] = {0, 1, 2, 3, 4};
     std::size_t const s = num_elems(arr);
 
-    vec4<int>::type v4(arr, arr + s);
-    vect<int>::type vr(arr, arr + s);
+    vec4i v4(arr, arr + s);
+    vecti vr(arr, arr + s);
 
     SECTION("Front")
     {
-        vec4<int>::type::iterator i = v4.erase(v4.begin());
+        vec4i::iterator i = v4.erase(v4.begin());
         (void) vr.erase(vr.begin());
 
         REQUIRE(v4.capacity() >= v4.size());
@@ -978,7 +982,7 @@ TEST_CASE("Erase single", "[opt][erase][single]")
     SECTION("Middle")
     {
         std::size_t const o = 2;
-        vec4<int>::type::iterator i = v4.erase(v4.begin() + o);
+        vec4i::iterator i = v4.erase(v4.begin() + o);
         (void) vr.erase(vr.begin() + o);
 
         REQUIRE(v4.capacity() >= v4.size());
@@ -990,7 +994,7 @@ TEST_CASE("Erase single", "[opt][erase][single]")
     SECTION("Back")
     {
         std::size_t const o = 4;
-        vec4<int>::type::iterator i = v4.erase(v4.begin() + o);
+        vec4i::iterator i = v4.erase(v4.begin() + o);
         (void) vr.erase(vr.begin() + o);
 
         REQUIRE(v4.capacity() >= v4.size());
@@ -1005,13 +1009,13 @@ TEST_CASE("Erase range", "[opt][erase][range]")
     int const arr[] = {0, 1, 2, 3, 4};
     std::size_t const s = num_elems(arr);
 
-    vec4<int>::type v4(arr, arr + s);
-    vect<int>::type vr(arr, arr + s);
+    vec4i v4(arr, arr + s);
+    vecti vr(arr, arr + s);
 
     SECTION("Front")
     {
         std::size_t const o = 2;
-        vec4<int>::type::iterator i = v4.erase(v4.begin(), v4.begin() + o);
+        vec4i::iterator i = v4.erase(v4.begin(), v4.begin() + o);
         (void) vr.erase(vr.begin(), vr.begin() + o);
 
         REQUIRE(v4.capacity() >= v4.size());
@@ -1024,7 +1028,7 @@ TEST_CASE("Erase range", "[opt][erase][range]")
     {
         std::size_t const o1 = 2;
         std::size_t const o2 = 4;
-        vec4<int>::type::iterator i = v4.erase(v4.begin() + o1, v4.begin() + o2);
+        vec4i::iterator i = v4.erase(v4.begin() + o1, v4.begin() + o2);
         (void) vr.erase(vr.begin() + o1, vr.begin() + o2);
 
         REQUIRE(v4.capacity() >= v4.size());
@@ -1036,7 +1040,7 @@ TEST_CASE("Erase range", "[opt][erase][range]")
     SECTION("Back")
     {
         std::size_t const o = 4;
-        vec4<int>::type::iterator i = v4.erase(v4.begin() + o, v4.end());
+        vec4i::iterator i = v4.erase(v4.begin() + o, v4.end());
         (void) vr.erase(vr.begin() + o, vr.end());
 
         REQUIRE(v4.capacity() >= v4.size());
@@ -1050,7 +1054,7 @@ TEST_CASE("Clear", "[opt][clear]")
 {
     SECTION("Empty")
     {
-        vec4<int>::type v4;
+        vec4i v4;
 
         v4.clear();
 
@@ -1064,7 +1068,7 @@ TEST_CASE("Clear", "[opt][clear]")
     {
         int const arr[] = {0, 1, 2, 3};
 
-        vec4<int>::type v4(arr, arr + num_elems(arr));
+        vec4i v4(arr, arr + num_elems(arr));
 
         v4.clear();
 
@@ -1079,7 +1083,7 @@ TEST_CASE("Empty", "[opt][empty]")
 {
     SECTION("Empty")
     {
-        vec4<int>::type v4;
+        vec4i v4;
 
         REQUIRE(v4.empty());
     }
@@ -1088,7 +1092,7 @@ TEST_CASE("Empty", "[opt][empty]")
     {
         int const arr[] = {0, 1, 2, 3};
 
-        vec4<int>::type v4(arr, arr + num_elems(arr));
+        vec4i v4(arr, arr + num_elems(arr));
 
         REQUIRE(!v4.empty());
     }
@@ -1100,24 +1104,24 @@ TEST_CASE("Size", "[opt][size]")
 
     SECTION("Zero-size")
     {
-        vec4<int>::type::size_type const s = 0;
-        vec4<int>::type v4(s, v);
+        vec4i::size_type const s = 0;
+        vec4i v4(s, v);
 
         REQUIRE(v4.size() == s);
     }
 
     SECTION("One-size")
     {
-        vec4<int>::type::size_type const s = 1;
-        vec4<int>::type v4(s, v);
+        vec4i::size_type const s = 1;
+        vec4i v4(s, v);
 
         REQUIRE(v4.size() == s);
     }
 
     SECTION("Sixteen-size")
     {
-        vec4<int>::type::size_type const s = 16;
-        vec4<int>::type v4(s, v);
+        vec4i::size_type const s = 16;
+        vec4i v4(s, v);
 
         REQUIRE(v4.size() == s);
     }
@@ -1125,11 +1129,11 @@ TEST_CASE("Size", "[opt][size]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Capacity", "[opt][capacity]")
 {
-    vec4<int>::type v4;
+    vec4i v4;
 
     SECTION("Zero")
     {
-        vec4<int>::type::size_type const c = 0;
+        vec4i::size_type const c = 0;
 
         v4.reserve(c);
 
@@ -1138,7 +1142,7 @@ TEST_CASE("Capacity", "[opt][capacity]")
 
     SECTION("Non-zero")
     {
-        vec4<int>::type::size_type const c = 7;
+        vec4i::size_type const c = 7;
 
         v4.reserve(c);
 
@@ -1148,15 +1152,15 @@ TEST_CASE("Capacity", "[opt][capacity]")
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Max size", "[opt][max size]")
 {
-    vec4<int>::type v4;
+    vec4i v4;
 
     REQUIRE(v4.max_size() >= 1);
 }
 ////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Get allocator", "[opt][get allocator]")
 {
-    vec4<int>::type v4;
-    vec4<int>::type::allocator_type a = v4.get_allocator();
+    vec4i v4;
+    vec4i::allocator_type a = v4.get_allocator();
     (void) a;
 }
 ////////////////////////////////////////////////////////////////////////////////
