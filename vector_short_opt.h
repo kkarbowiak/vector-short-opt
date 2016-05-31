@@ -488,7 +488,8 @@ inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::insert(
         else
         {
             d_vector.reserve(N + 1);
-            d_vector.assign(begin(), end());
+
+            move_array_to_vector();
 
             result = &*d_vector.insert(d_vector.begin() + (position - get_ptr(0)), val);
 
@@ -519,7 +520,8 @@ inline void vector_short_opt<T, N>::insert(iterator position, size_type n, value
         else
         {
             d_vector.reserve(d_size + n);
-            d_vector.assign(begin(), end());
+
+            move_array_to_vector();
 
             d_vector.insert(d_vector.begin() + (position - get_ptr(0)), n, val);
 
