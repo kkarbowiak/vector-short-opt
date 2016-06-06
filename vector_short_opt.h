@@ -167,15 +167,26 @@ inline vector_short_opt<T, N>::vector_short_opt(InputIterator first, InputIterat
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
 inline vector_short_opt<T, N>::vector_short_opt(vector_short_opt const & other)
-    : d_size(other.d_size)
+    : d_size(0)
     , d_array_used(other.d_array_used)
     , d_vector(other.d_vector)
 {
     if (d_array_used)
     {
-        for (size_type i = 0; i < d_size; ++i)
+        try
         {
-            construct(i, *other.get_ptr(i));
+            while (d_size < other.d_size)
+            {
+                construct(d_size, *other.get_ptr(d_size));
+
+                ++d_size;
+            }
+        }
+        catch (...)
+        {
+            destroy_array();
+
+            throw;
         }
     }
 }
