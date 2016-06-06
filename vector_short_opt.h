@@ -150,9 +150,18 @@ inline vector_short_opt<T, N>::vector_short_opt(InputIterator first, InputIterat
     , d_array_used(true)
     , d_vector(alloc)
 {
-    for (InputIterator i = first; i != last; ++i)
+    try
     {
-        push_back(*i);
+        for (InputIterator i = first; i != last; ++i)
+        {
+            push_back(*i);
+        }
+    }
+    catch (...)
+    {
+        destroy_array();
+
+        throw;
     }
 }
 ////////////////////////////////////////////////////////////////////////////////
