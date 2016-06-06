@@ -115,15 +115,26 @@ inline vector_short_opt<T, N>::vector_short_opt(allocator_type const & alloc)
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
 inline vector_short_opt<T, N>::vector_short_opt(size_type n, value_type const & val, allocator_type const & alloc)
-    : d_size(n)
+    : d_size(0)
     , d_array_used(n < N)
     , d_vector(alloc)
 {
     if (d_array_used)
     {
-        for (size_type i = 0; i < n; ++i)
+        try
         {
-            construct(i, val);
+            while (d_size < n)
+            {
+                construct(d_size, val);
+
+                ++d_size;
+            }
+        }
+        catch (...)
+        {
+            destroy_array();
+
+            throw;
         }
     }
     else
