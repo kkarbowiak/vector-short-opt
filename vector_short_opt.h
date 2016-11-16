@@ -1,10 +1,62 @@
 #ifndef SHORT_VECTOR_OPT_H__DDK
 #define SHORT_VECTOR_OPT_H__DDK
 
+#include <iterator>
 #include <vector>
 #include <algorithm>
 #include <cstddef>
 
+
+namespace opt
+{
+    namespace detail
+    {
+        template<typename T>
+        class iterator : public std::iterator<std::random_access_iterator_tag, T>
+        {
+            public:
+                iterator();
+                iterator(iterator const & other);
+                explicit iterator(T * ptr);
+
+                iterator & operator=(iterator const & other);
+
+                T & operator*() const;
+                T * operator->() const;
+                T & operator[](difference_type off) const;
+
+                iterator & operator+=(difference_type off);
+                iterator & operator-=(difference_type off);
+
+                iterator & operator++();
+                iterator & operator--();
+                iterator operator++(int) const;
+                iterator operator--(int) const;
+
+                bool operator==(iterator const & rhs) const;
+                bool operator!=(iterator const & rhs) const;
+                bool operator>(iterator const & rhs) const;
+                bool operator<(iterator const & rhs) const;
+                bool operator>=(iterator const & rhs) const;
+                bool operator<=(iterator const & rhs) const;
+
+                template<typename U>
+                friend iterator<U> operator+(iterator<U> const & lhs, typename iterator<U>::difference_type rhs);
+                template<typename U>
+                friend iterator<U> operator+(typename iterator<U>::difference_type lhs, iterator<U> const & rhs);
+                template<typename U>
+                friend iterator<U> operator-(iterator<U> const & lhs, typename iterator<U>::difference_type rhs);
+                template<typename U>
+                friend iterator<U> operator-(typename iterator<U>::difference_type lhs, iterator<U> const & rhs);
+
+                template<typename U>
+                friend typename iterator<U>::difference_type operator-(iterator<U> const & lhs, iterator<U> const & rhs);
+
+            private:
+                T * d_pointer;
+        };
+    }
+}
 
 namespace opt
 {
@@ -735,6 +787,184 @@ inline void vector_short_opt<T, N>::destroy_array()
     }
 }
 ////////////////////////////////////////////////////////////////////////////////
+}
+
+namespace opt
+{
+namespace detail
+{
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline iterator<T>::iterator()
+    : d_pointer(NULL)
+{
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline iterator<T>::iterator(iterator const & other)
+    : d_pointer(other.d_pointer)
+{
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline iterator<T>::iterator(T * ptr)
+    : d_pointer(ptr)
+{
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline iterator<T> & iterator<T>::operator=(iterator const & other)
+{
+    d_pointer = other.d_pointer;
+
+    return *this;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline T & iterator<T>::operator*() const
+{
+    return *d_pointer;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline T * iterator<T>::operator->() const
+{
+    return d_pointer;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline T & iterator<T>::operator[](difference_type off) const
+{
+    return d_pointer[off];
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline iterator<T> & iterator<T>::operator+=(difference_type off)
+{
+    d_pointer += off;
+
+    return *this;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline iterator<T> & iterator<T>::operator-=(difference_type off)
+{
+    d_pointer -= off;
+
+    return *this;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline iterator<T> & iterator<T>::operator++()
+{
+    ++d_pointer;
+
+    return *this;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline iterator<T> & iterator<T>::operator--()
+{
+    --d_pointer;
+
+    return *this;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline iterator<T> iterator<T>::operator++(int) const
+{
+    iterator tmp(*this);
+
+    ++d_pointer;
+
+    return tmp;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline iterator<T> iterator<T>::operator--(int) const
+{
+    iterator tmp(*this);
+
+    --d_pointer;
+
+    return tmp;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline bool iterator<T>::operator==(iterator const & rhs) const
+{
+    return (d_pointer == rhs.d_pointer);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline bool iterator<T>::operator!=(iterator const & rhs) const
+{
+    return !(*this == rhs);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline bool iterator<T>::operator>(iterator const & rhs) const
+{
+    return (d_pointer > rhs.d_pointer);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline bool iterator<T>::operator<(iterator const & rhs) const
+{
+    return (d_pointer < rhs.d_pointer);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline bool iterator<T>::operator>=(iterator const & rhs) const
+{
+    return !(*this < rhs);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline bool iterator<T>::operator<=(iterator const & rhs) const
+{
+    return !(*this > rhs);
+}
+////////////////////////////////////////////////////////////////////////////////
+}
+}
+
+namespace opt
+{
+namespace detail
+{
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline iterator<T> operator+(iterator<T> const & lhs, typename iterator<T>::difference_type rhs)
+{
+    return iterator<T>(lhs.d_pointer + rhs);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline iterator<T> operator+(typename iterator<T>::difference_type lhs, iterator<T> const & rhs)
+{
+    return iterator<T>(lhs + rhs.d_pointer);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline iterator<T> operator-(iterator<T> const & lhs, typename iterator<T>::difference_type rhs)
+{
+    return iterator<T>(lhs.d_pointer - rhs);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline iterator<T> operator-(typename iterator<T>::difference_type lhs, iterator<T> const & rhs)
+{
+    return iterator<T>(lhs - rhs.d_pointer);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline typename iterator<T>::difference_type operator-(iterator<T> const & lhs, iterator<T> const & rhs)
+{
+    return (lhs.d_pointer - rhs.d_pointer);
+}
+////////////////////////////////////////////////////////////////////////////////
+}
 }
 
 #endif /* SHORT_VECTOR_OPT_H__DDK */
