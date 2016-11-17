@@ -17,13 +17,13 @@ namespace opt
             public:
                 iterator();
                 iterator(iterator const & other);
-                explicit iterator(T * ptr);
+                explicit iterator(pointer ptr);
 
                 iterator & operator=(iterator const & other);
 
-                T & operator*() const;
-                T * operator->() const;
-                T & operator[](difference_type off) const;
+                reference operator*() const;
+                pointer operator->() const;
+                reference operator[](difference_type off) const;
 
                 iterator & operator+=(difference_type off);
                 iterator & operator-=(difference_type off);
@@ -811,7 +811,7 @@ inline iterator<T>::iterator(iterator const & other)
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline iterator<T>::iterator(T * ptr)
+inline iterator<T>::iterator(pointer ptr)
     : d_pointer(ptr)
 {
 }
@@ -825,19 +825,19 @@ inline iterator<T> & iterator<T>::operator=(iterator const & other)
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline T & iterator<T>::operator*() const
+inline typename iterator<T>::reference iterator<T>::operator*() const
 {
     return *d_pointer;
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline T * iterator<T>::operator->() const
+inline typename iterator<T>::pointer iterator<T>::operator->() const
 {
     return d_pointer;
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-inline T & iterator<T>::operator[](difference_type off) const
+inline typename iterator<T>::reference iterator<T>::operator[](difference_type off) const
 {
     return d_pointer[off];
 }
