@@ -70,7 +70,7 @@ namespace opt
             typedef T * pointer;
             typedef T const & const_reference;
             typedef T const * const_pointer;
-            typedef T * iterator;
+            typedef detail::iterator<T> iterator;
             typedef T const * const_iterator;
 
             typedef std::ptrdiff_t difference_type;
@@ -263,11 +263,13 @@ inline vector_short_opt<T, N> & vector_short_opt<T, N>::operator=(vector_short_o
 template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::begin()
 {
-    return d_array_used
-        ? reinterpret_cast<iterator>(get_ptr(0))
+    T * ptr = d_array_used
+        ? get_ptr(0)
         : d_vector.empty()
             ? NULL
             : &d_vector[0];
+
+    return iterator(ptr);
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
@@ -283,11 +285,13 @@ inline typename vector_short_opt<T, N>::const_iterator vector_short_opt<T, N>::b
 template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::end()
 {
-    return d_array_used
-        ? reinterpret_cast<iterator>(get_ptr(d_size))
+    T * ptr = d_array_used
+        ? get_ptr(d_size)
         : d_vector.empty()
             ? NULL
             : &d_vector[0] + d_vector.size();
+
+    return iterator(ptr);
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
@@ -562,7 +566,7 @@ inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::insert(
             else
             {
                 construct(d_size, *get_ptr(d_size - 1));
-                std::copy_backward(position, get_ptr(d_size - 1), get_ptr(d_size));
+                std::copy_backward(position, iterator(get_ptr(d_size - 1)), iterator(get_ptr(d_size)));
                 ++d_size;
                 *position = val;
                 result = position;
@@ -574,14 +578,14 @@ inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::insert(
 
             move_array_to_vector();
 
-            result = &*d_vector.insert(d_vector.begin() + (position - get_ptr(0)), val);
+            result = iterator(&*d_vector.insert(d_vector.begin() + (position - iterator(get_ptr(0))), val));
 
             d_array_used = false;
         }
     }
     else
     {
-        result = &*d_vector.insert(d_vector.begin() + std::distance(begin(), position), val);
+        result = iterator(&*d_vector.insert(d_vector.begin() + std::distance(begin(), position), val));
     }
 
     return result;
@@ -606,7 +610,7 @@ inline void vector_short_opt<T, N>::insert(iterator position, size_type n, value
 
             move_array_to_vector();
 
-            d_vector.insert(d_vector.begin() + (position - get_ptr(0)), n, val);
+            d_vector.insert(d_vector.begin() + (position - iterator(get_ptr(0))), n, val);
 
             d_array_used = false;
         }
@@ -651,7 +655,7 @@ inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::erase(i
         typename std::vector<T>::iterator i = d_vector.erase(d_vector.begin() + std::distance(begin(), position));
 
         return i != d_vector.end()
-            ? &*i
+            ? iterator(&*i)
             : end();
     }
 }
@@ -674,7 +678,7 @@ inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::erase(i
         typename std::vector<T>::iterator i = d_vector.erase(d_vector.begin() + std::distance(begin(), first), d_vector.begin() + std::distance(begin(), last));
 
         return i != d_vector.end()
-            ? &*i
+            ? iterator(&*i)
             : end();
     }
 }
