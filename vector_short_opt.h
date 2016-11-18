@@ -1,7 +1,6 @@
 #ifndef SHORT_VECTOR_OPT_H__DDK
 #define SHORT_VECTOR_OPT_H__DDK
 
-#include <iterator>
 #include <vector>
 #include <algorithm>
 #include <cstddef>
@@ -12,8 +11,15 @@ namespace opt
     namespace detail
     {
         template<typename T>
-        class iterator : public std::iterator<std::random_access_iterator_tag, T>
+        class iterator
         {
+            public:
+                typedef std::random_access_iterator_tag iterator_category;
+                typedef T value_type;
+                typedef ptrdiff_t difference_type;
+                typedef T * pointer;
+                typedef T & reference;
+
             public:
                 iterator();
                 iterator(iterator const & other);
