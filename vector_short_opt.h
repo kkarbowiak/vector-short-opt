@@ -131,7 +131,7 @@ namespace opt
             typedef T const & const_reference;
             typedef T const * const_pointer;
             typedef detail::iterator<T> iterator;
-            typedef T const * const_iterator;
+            typedef detail::const_iterator<T> const_iterator;
 
             typedef std::ptrdiff_t difference_type;
             typedef std::size_t size_type;
@@ -335,11 +335,13 @@ inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::begin()
 template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::const_iterator vector_short_opt<T, N>::begin() const
 {
-    return d_array_used
-        ? reinterpret_cast<const_iterator>(get_ptr(0))
+    const_pointer ptr = d_array_used
+        ? get_ptr(0)
         : d_vector.empty()
             ? NULL
             : &d_vector[0];
+
+    return const_iterator(ptr);
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
@@ -357,11 +359,13 @@ inline typename vector_short_opt<T, N>::iterator vector_short_opt<T, N>::end()
 template<typename T, std::size_t N>
 inline typename vector_short_opt<T, N>::const_iterator vector_short_opt<T, N>::end() const
 {
-    return d_array_used
-        ? reinterpret_cast<const_iterator>(get_ptr(d_size))
+    const_pointer ptr = d_array_used
+        ? get_ptr(d_size)
         : d_vector.empty()
             ? NULL
             : &d_vector[0] + d_vector.size();
+
+    return const_iterator(ptr);
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
