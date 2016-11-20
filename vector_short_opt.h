@@ -61,6 +61,60 @@ namespace opt
             private:
                 T * d_pointer;
         };
+
+        template<typename T>
+        class const_iterator
+        {
+            public:
+                typedef std::random_access_iterator_tag iterator_category;
+                typedef T value_type;
+                typedef ptrdiff_t difference_type;
+                typedef T const * pointer;
+                typedef T const & reference;
+
+            public:
+                const_iterator();
+                const_iterator(const_iterator const & other);
+                const_iterator(iterator<T> const & other);
+                explicit const_iterator(pointer ptr);
+
+                const_iterator & operator=(const_iterator const & other);
+                const_iterator & operator=(iterator<T> const & other);
+
+                reference operator*() const;
+                pointer operator->() const;
+                reference operator[](difference_type off) const;
+
+                const_iterator & operator+=(difference_type off);
+                const_iterator & operator-=(difference_type off);
+
+                const_iterator & operator++();
+                const_iterator & operator--();
+                const_iterator operator++(int) const;
+                const_iterator operator--(int) const;
+
+                bool operator==(const_iterator const & rhs) const;
+                bool operator!=(const_iterator const & rhs) const;
+                bool operator>(const_iterator const & rhs) const;
+                bool operator<(const_iterator const & rhs) const;
+                bool operator>=(const_iterator const & rhs) const;
+                bool operator<=(const_iterator const & rhs) const;
+
+                template<typename U>
+                friend const_iterator<U> operator+(const_iterator<U> const & lhs, typename const_iterator<U>::difference_type rhs);
+                template<typename U>
+                friend const_iterator<U> operator+(typename const_iterator<U>::difference_type lhs, const_iterator<U> const & rhs);
+                template<typename U>
+                friend const_iterator<U> operator-(const_iterator<U> const & lhs, typename const_iterator<U>::difference_type rhs);
+                template<typename U>
+                friend const_iterator<U> operator-(typename const_iterator<U>::difference_type lhs, const_iterator<U> const & rhs);
+
+                template<typename U>
+                friend typename const_iterator<U>::difference_type operator-(const_iterator<U> const & lhs, const_iterator<U> const & rhs);
+
+            private:
+                T const * d_pointer;
+        };
     }
 }
 
@@ -970,6 +1024,198 @@ inline iterator<T> operator-(typename iterator<T>::difference_type lhs, iterator
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T>
 inline typename iterator<T>::difference_type operator-(iterator<T> const & lhs, iterator<T> const & rhs)
+{
+    return (lhs.d_pointer - rhs.d_pointer);
+}
+////////////////////////////////////////////////////////////////////////////////
+}
+}
+
+namespace opt
+{
+namespace detail
+{
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline const_iterator<T>::const_iterator()
+    : d_pointer(NULL)
+{
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline const_iterator<T>::const_iterator(const_iterator const & other)
+    : d_pointer(other.d_pointer)
+{
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline const_iterator<T>::const_iterator(iterator<T> const & other)
+    : d_pointer(other.d_pointer)
+{
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline const_iterator<T>::const_iterator(pointer ptr)
+    : d_pointer(ptr)
+{
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline const_iterator<T> & const_iterator<T>::operator=(const_iterator const & other)
+{
+    d_pointer = other.d_pointer;
+
+    return *this;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline const_iterator<T> & const_iterator<T>::operator=(iterator<T> const & other)
+{
+    d_pointer = other.d_pointer;
+
+    return *this;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline typename const_iterator<T>::reference const_iterator<T>::operator*() const
+{
+    return *d_pointer;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline typename const_iterator<T>::pointer const_iterator<T>::operator->() const
+{
+    return d_pointer;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline typename const_iterator<T>::reference const_iterator<T>::operator[](difference_type off) const
+{
+    return d_pointer[off];
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline const_iterator<T> & const_iterator<T>::operator+=(difference_type off)
+{
+    d_pointer += off;
+
+    return *this;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline const_iterator<T> & const_iterator<T>::operator-=(difference_type off)
+{
+    d_pointer -= off;
+
+    return *this;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline const_iterator<T> & const_iterator<T>::operator++()
+{
+    ++d_pointer;
+
+    return *this;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline const_iterator<T> & const_iterator<T>::operator--()
+{
+    --d_pointer;
+
+    return *this;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline const_iterator<T> const_iterator<T>::operator++(int) const
+{
+    const_iterator tmp(*this);
+
+    ++d_pointer;
+
+    return tmp;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline const_iterator<T> const_iterator<T>::operator--(int) const
+{
+    const_iterator tmp(*this);
+
+    --d_pointer;
+
+    return tmp;
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline bool const_iterator<T>::operator==(const_iterator const & rhs) const
+{
+    return (d_pointer == rhs.d_pointer);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline bool const_iterator<T>::operator!=(const_iterator const & rhs) const
+{
+    return !(*this == rhs);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline bool const_iterator<T>::operator>(const_iterator const & rhs) const
+{
+    return (d_pointer > rhs.d_pointer);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline bool const_iterator<T>::operator<(const_iterator const & rhs) const
+{
+    return (d_pointer < rhs.d_pointer);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline bool const_iterator<T>::operator>=(const_iterator const & rhs) const
+{
+    return !(*this < rhs);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline bool const_iterator<T>::operator<=(const_iterator const & rhs) const
+{
+    return !(*this > rhs);
+}
+////////////////////////////////////////////////////////////////////////////////
+}
+}
+
+namespace opt
+{
+namespace detail
+{
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline const_iterator<T> operator+(const_iterator<T> const & lhs, typename const_iterator<T>::difference_type rhs)
+{
+    return const_iterator<T>(lhs.d_pointer + rhs);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline const_iterator<T> operator+(typename const_iterator<T>::difference_type lhs, const_iterator<T> const & rhs)
+{
+    return const_iterator<T>(lhs + rhs.d_pointer);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline const_iterator<T> operator-(const_iterator<T> const & lhs, typename const_iterator<T>::difference_type rhs)
+{
+    return const_iterator<T>(lhs.d_pointer - rhs);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline const_iterator<T> operator-(typename const_iterator<T>::difference_type lhs, const_iterator<T> const & rhs)
+{
+    return const_iterator<T>(lhs - rhs.d_pointer);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T>
+inline typename const_iterator<T>::difference_type operator-(const_iterator<T> const & lhs, const_iterator<T> const & rhs)
 {
     return (lhs.d_pointer - rhs.d_pointer);
 }
