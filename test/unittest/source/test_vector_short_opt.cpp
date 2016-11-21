@@ -664,6 +664,212 @@ TEST_CASE("End", "[opt][end]")
     }
 }
 ////////////////////////////////////////////////////////////////////////////////
+TEST_CASE("Rbegin", "[opt][rbegin]")
+{
+    SECTION("int")
+    {
+        SECTION("Empty")
+        {
+            SECTION("Const")
+            {
+                vec4i const v4;
+
+                REQUIRE(v4.capacity() >= v4.size());
+
+                REQUIRE(v4.rbegin() == v4.rend());
+            }
+
+            SECTION("Non-const")
+            {
+                vec4i v4;
+
+                REQUIRE(v4.capacity() >= v4.size());
+
+                REQUIRE(v4.rbegin() == v4.rend());
+            }
+        }
+
+        SECTION("Non-empty")
+        {
+            int const v = 7;
+            vec4i::size_type const s = 1;
+
+            SECTION("Const")
+            {
+                vec4i const v4(s, v);
+
+                REQUIRE(v4.capacity() >= v4.size());
+
+                REQUIRE(v4.rbegin() != v4.rend());
+                REQUIRE(*v4.rbegin() == v);
+            }
+
+            SECTION("Non-const")
+            {
+                vec4i v4(s, v);
+
+                REQUIRE(v4.capacity() >= v4.size());
+
+                REQUIRE(v4.rbegin() != v4.rend());
+                REQUIRE(*v4.rbegin() == v);
+            }
+        }
+    }
+
+    SECTION("std::string")
+    {
+        SECTION("Empty")
+        {
+            SECTION("Const")
+            {
+                vec4s const v4;
+
+                REQUIRE(v4.capacity() >= v4.size());
+
+                REQUIRE(v4.rbegin() == v4.rend());
+            }
+
+            SECTION("Non-const")
+            {
+                vec4s v4;
+
+                REQUIRE(v4.capacity() >= v4.size());
+
+                REQUIRE(v4.rbegin() == v4.rend());
+            }
+        }
+
+        SECTION("Non-empty")
+        {
+            std::string const v = "7";
+            vec4s::size_type const s = 1;
+
+            SECTION("Const")
+            {
+                vec4s const v4(s, v);
+
+                REQUIRE(v4.capacity() >= v4.size());
+
+                REQUIRE(v4.rbegin() != v4.rend());
+                REQUIRE(*v4.rbegin() == v);
+            }
+
+            SECTION("Non-const")
+            {
+                vec4s v4(s, v);
+
+                REQUIRE(v4.capacity() >= v4.size());
+
+                REQUIRE(v4.rbegin() != v4.rend());
+                REQUIRE(*v4.rbegin() == v);
+            }
+        }
+    }
+}
+////////////////////////////////////////////////////////////////////////////////
+TEST_CASE("Rend", "[opt][rend]")
+{
+    SECTION("int")
+    {
+        SECTION("Empty")
+        {
+            SECTION("Const")
+            {
+                vec4i const v4;
+
+                REQUIRE(v4.capacity() >= v4.size());
+
+                REQUIRE(v4.rend() == v4.rbegin());
+            }
+
+            SECTION("Non-const")
+            {
+                vec4i v4;
+
+                REQUIRE(v4.capacity() >= v4.size());
+
+                REQUIRE(v4.rend() == v4.rbegin());
+            }
+        }
+
+        SECTION("Non-empty")
+        {
+            int const v = 7;
+            vec4i::size_type const s = 1;
+
+            SECTION("Const")
+            {
+                vec4i const v4(s, v);
+
+                REQUIRE(v4.capacity() >= v4.size());
+
+                REQUIRE(v4.rend() != v4.rbegin());
+                REQUIRE(*(v4.rend() - 1) == v);
+            }
+
+            SECTION("Non-const")
+            {
+                vec4i v4(s, v);
+
+                REQUIRE(v4.capacity() >= v4.size());
+
+                REQUIRE(v4.rend() != v4.rbegin());
+                REQUIRE(*(v4.rend() - 1) == v);
+            }
+        }
+    }
+
+    SECTION("std::string")
+    {
+        SECTION("Empty")
+        {
+            SECTION("Const")
+            {
+                vec4s const v4;
+
+                REQUIRE(v4.capacity() >= v4.size());
+
+                REQUIRE(v4.rend() == v4.rbegin());
+            }
+
+            SECTION("Non-const")
+            {
+                vec4s v4;
+
+                REQUIRE(v4.capacity() >= v4.size());
+
+                REQUIRE(v4.rend() == v4.rbegin());
+            }
+        }
+
+        SECTION("Non-empty")
+        {
+            std::string const v = "7";
+            vec4s::size_type const s = 1;
+
+            SECTION("Const")
+            {
+                vec4s const v4(s, v);
+
+                REQUIRE(v4.capacity() >= v4.size());
+
+                REQUIRE(v4.rend() != v4.rbegin());
+                REQUIRE(*(v4.rend() - 1) == v);
+            }
+
+            SECTION("Non-const")
+            {
+                vec4s v4(s, v);
+
+                REQUIRE(v4.capacity() >= v4.size());
+
+                REQUIRE(v4.rend() != v4.rbegin());
+                REQUIRE(*(v4.rend() - 1) == v);
+            }
+        }
+    }
+}
+////////////////////////////////////////////////////////////////////////////////
 TEST_CASE("Resize", "[opt][resize]")
 {
     SECTION("int")
