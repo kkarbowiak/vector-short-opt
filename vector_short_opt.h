@@ -155,6 +155,11 @@ namespace opt
             iterator end();
             const_iterator end() const;
 
+            reverse_iterator rbegin();
+            const_reverse_iterator rbegin() const;
+            reverse_iterator rend();
+            const_reverse_iterator rend() const;
+
             void resize(size_type n, value_type val = value_type());
 
             void reserve(size_type n);
@@ -369,6 +374,30 @@ inline typename vector_short_opt<T, N>::const_iterator vector_short_opt<T, N>::e
             : &d_vector[0] + d_vector.size();
 
     return const_iterator(ptr);
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T, std::size_t N>
+inline typename vector_short_opt<T, N>::reverse_iterator vector_short_opt<T, N>::rbegin()
+{
+    return reverse_iterator(end());
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T, std::size_t N>
+inline typename vector_short_opt<T, N>::const_reverse_iterator vector_short_opt<T, N>::rbegin() const
+{
+    return const_reverse_iterator(end());
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T, std::size_t N>
+inline typename vector_short_opt<T, N>::reverse_iterator vector_short_opt<T, N>::rend()
+{
+    return reverse_iterator(begin());
+}
+////////////////////////////////////////////////////////////////////////////////
+template<typename T, std::size_t N>
+inline typename vector_short_opt<T, N>::const_reverse_iterator vector_short_opt<T, N>::rend() const
+{
+    return const_reverse_iterator(begin());
 }
 ////////////////////////////////////////////////////////////////////////////////
 template<typename T, std::size_t N>
