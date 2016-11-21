@@ -1,6 +1,7 @@
 #ifndef SHORT_VECTOR_OPT_H__DDK
 #define SHORT_VECTOR_OPT_H__DDK
 
+#include <iterator>
 #include <vector>
 #include <algorithm>
 #include <cstddef>
@@ -132,6 +133,8 @@ namespace opt
             typedef T const * const_pointer;
             typedef detail::iterator<T> iterator;
             typedef detail::const_iterator<T> const_iterator;
+            typedef std::reverse_iterator<iterator> reverse_iterator;
+            typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
             typedef std::ptrdiff_t difference_type;
             typedef std::size_t size_type;
