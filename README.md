@@ -39,6 +39,7 @@ As I mentioned above, this project is not finished. At some point I stopped work
 There are many things that should be done to declare this work *complete* or *production-grade*.
 
 At least the following come to my mind:
+
  - add `allocator` template argument (defaulting to `std::vector::allocator_type`)
  - ensure proper alignment of the static array
  - reduce the memory footprint by cleverly putting most private variables into a `union`
