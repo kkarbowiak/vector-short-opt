@@ -1,3 +1,7 @@
+/*
+    Copyright 2018 Krzysztof Karbowiak
+*/
+
 #ifndef SHORT_VECTOR_OPT_H__DDK
 #define SHORT_VECTOR_OPT_H__DDK
 
