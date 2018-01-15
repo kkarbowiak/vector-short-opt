@@ -39,13 +39,13 @@ As I mentioned above, this project is not finished. At some point I stopped work
 There are many things that should be done to declare this work *complete* or *production-grade*.
 
 At least the following come to my mind:
-* add `allocator` template argument (defaulting to `std::vector::allocator_type`)
-* ensure proper alignment of the static array
-* reduce the memory footprint by cleverly putting most private variables into a `union`
-* use assignment instead of copy-constructors in appropriate places
-* make vectors of different static size related types
-* extend the unit test suite to cover allocations and algorithmic complexity guaranties
-* update the implementation to the C++11 standard
+ - add `allocator` template argument (defaulting to `std::vector::allocator_type`)
+ - ensure proper alignment of the static array
+ - reduce the memory footprint by cleverly putting most private variables into a `union`
+ - use assignment instead of copy-constructors in appropriate places
+ - make vectors of different static size related types
+ - extend the unit test suite to cover allocations and algorithmic complexity guaranties
+ - update the implementation to the C++11 standard
 
 ## License ##
 
