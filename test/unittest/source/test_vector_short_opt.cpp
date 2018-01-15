@@ -1,3 +1,7 @@
+/*
+    Copyright 2018 Krzysztof Karbowiak
+*/
+
 #include "catch/catch.hpp"
 
 #include "vector_short_opt.h"
